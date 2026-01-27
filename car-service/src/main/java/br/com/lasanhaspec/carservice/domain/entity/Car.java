@@ -3,11 +3,21 @@ package br.com.lasanhaspec.carservice.domain.entity;
 
 import jakarta.persistence.*;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 
 import java.time.LocalDate;
 
+
+
+@Data
+@Getter
+@Setter
 @Entity
+@ToString
 @Table(name = "cars")
 public class Car {
 
