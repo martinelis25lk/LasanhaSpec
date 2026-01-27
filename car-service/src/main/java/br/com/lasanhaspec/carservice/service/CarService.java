@@ -29,8 +29,8 @@ public class CarService {
 
 
     public Car findById(Long id){
-        return carRepository.findAllById(id)
-                .orElseThrows(()-> new RuntimeException("Car not found"));
+        return carRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Car not found"));
     }
 
 
