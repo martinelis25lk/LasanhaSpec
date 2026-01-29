@@ -1,7 +1,7 @@
 package br.com.lasanhaspec.carservice.service;
 
 
-import br.com.lasanhaspec.carservice.domain.entity.Car;
+import br.com.lasanhaspec.carservice.domain.entity.VehicleModel;
 import br.com.lasanhaspec.carservice.repository.CarRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +18,19 @@ public class CarService {
     }
 
 
-    public Car save(Car car){
-        return carRepository.save(car);
+    public VehicleModel save(VehicleModel vehicleModel){
+        return carRepository.save(vehicleModel);
     }
 
 
-    public List<Car> findAll(){
+    public List<VehicleModel> findAll(){
         return carRepository.findAll();
     }
 
 
-    public Car findById(Long id){
+    public VehicleModel findById(Long id){
         return carRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Car not found"));
+                .orElseThrow(()-> new RuntimeException("vehicleModel not found"));
     }
 
 
