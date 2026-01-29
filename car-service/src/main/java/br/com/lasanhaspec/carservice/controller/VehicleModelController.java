@@ -1,7 +1,7 @@
 package br.com.lasanhaspec.carservice.controller;
 
 
-import br.com.lasanhaspec.carservice.domain.entity.Car;
+import br.com.lasanhaspec.carservice.domain.entity.VehicleModel;
 import br.com.lasanhaspec.carservice.service.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,19 +26,19 @@ public class CarController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Car create(@RequestBody Car car){
-        System.out.println("CAR RECEBIDO: " + car);
-        return carService.save(car);
+    public VehicleModel create(@RequestBody VehicleModel vehicleModel){
+        System.out.println("CAR RECEBIDO: " + vehicleModel);
+        return carService.save(vehicleModel);
     }
 
     @GetMapping
-    public List<Car> List(){
+    public List<VehicleModel> List(){
         return carService.findAll();
     }
 
 
     @GetMapping("/{id}")
-    public Car getById(@PathVariable Long id){
+    public VehicleModel getById(@PathVariable Long id){
         return carService.findById(id);
     }
 

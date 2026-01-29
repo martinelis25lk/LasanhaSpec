@@ -9,9 +9,9 @@
 		<relativePath/>
 	</parent>
 	<groupId>br.com.lasanhaspec</groupId>
-	<artifactId>car-service</artifactId>
+	<artifactId>vehicle-catalog-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>car-service</name>
+	<name>vehicleModel-service</name>
 	<description>Car Service from project LasanhaSpec</description>
 	<url/>
 	<licenses>

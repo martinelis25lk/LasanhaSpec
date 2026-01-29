@@ -9,46 +9,32 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-import java.time.LocalDate;
-
-
-
 @Data
 @Getter
 @Setter
 @Entity
 @ToString
-@Table(name = "cars")
-public class Car {
+@Table(name = "vehicle_models")
+public class VehicleModel {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-
     private Long id;
 
     private String brand;
-
     private String model;
     private Integer year;
 
 
-    private String engine;
-    private Integer horsepower;
-    private Integer torque;
+    private String engineCode;
 
+    private Integer factoryHorsepower;
+    private Integer factroyTorque;
 
-    private Double fuelConsumptionCity;
-    private Double fuelConsumptionHighway;
+    @Enumerated(EnumType.STRING)
+    private AspirationType aspirationType;
 
-    private LocalDate createdAt;
-
-
-    @PrePersist
-    public void prePersist(){
-        this.createdAt = LocalDate.now();
-    }
 
 
 
