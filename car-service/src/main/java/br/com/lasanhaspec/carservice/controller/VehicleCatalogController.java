@@ -2,22 +2,22 @@ package br.com.lasanhaspec.carservice.controller;
 
 
 import br.com.lasanhaspec.carservice.domain.entity.VehicleModel;
-import br.com.lasanhaspec.carservice.service.CarService;
+import br.com.lasanhaspec.carservice.service.VehicleModelService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/cars")
-public class CarController {
+@RequestMapping("/vehicle-models")
+public class VehicleModelController {
 
 
-    private final CarService carService;
+    private final VehicleModelService vehicleModelService;
 
 
-    public CarController(CarService carService){
-        this.carService = carService;
+    public VehicleModelController(VehicleModelService vehicleModelService){
+        this.vehicleModelService = vehicleModelService;
     }
 
 
@@ -28,18 +28,18 @@ public class CarController {
     @ResponseStatus(HttpStatus.CREATED)
     public VehicleModel create(@RequestBody VehicleModel vehicleModel){
         System.out.println("CAR RECEBIDO: " + vehicleModel);
-        return carService.save(vehicleModel);
+        return vehicleModelService.save(vehicleModel);
     }
 
     @GetMapping
     public List<VehicleModel> List(){
-        return carService.findAll();
+        return vehicleModelService.findAll();
     }
 
 
     @GetMapping("/{id}")
     public VehicleModel getById(@PathVariable Long id){
-        return carService.findById(id);
+        return vehicleModelService.findById(id);
     }
 
 }

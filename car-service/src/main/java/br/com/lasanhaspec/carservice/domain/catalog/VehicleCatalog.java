@@ -2,6 +2,7 @@ package br.com.lasanhaspec.carservice.domain.entity;
 
 
 import jakarta.persistence.*;
+import br.com.lasanhaspec.carservice.domain.enums.AspirationType;
 
 import lombok.Data;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @Table(name = "vehicle_models")
-public class VehicleModel {
+public class VehicleCatalog {
 
 
     @Id
