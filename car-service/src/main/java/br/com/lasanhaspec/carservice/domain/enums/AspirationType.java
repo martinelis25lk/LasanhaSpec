@@ -1,6 +1,6 @@
 package br.com.lasanhaspec.carservice.domain.enums;
 
-public enum aspirationType{
+public enum AspirationType {
 
     NATURALLY_ASPPIRATED,
     TURBOCHARGED,
