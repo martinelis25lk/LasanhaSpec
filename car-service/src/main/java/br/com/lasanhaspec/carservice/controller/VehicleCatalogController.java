@@ -1,8 +1,8 @@
 package br.com.lasanhaspec.carservice.controller;
 
 
-import br.com.lasanhaspec.carservice.domain.entity.VehicleModel;
-import br.com.lasanhaspec.carservice.service.VehicleModelService;
+import br.com.lasanhaspec.carservice.domain.catalog.VehicleCatalog;
+import br.com.lasanhaspec.carservice.service.VehicleCatalogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vehicle-models")
-public class VehicleModelController {
+public class VehicleCatalogController {
 
 
-    private final VehicleModelService vehicleModelService;
+    private final VehicleCatalogService vehicleCatalogService;
 
 
-    public VehicleModelController(VehicleModelService vehicleModelService){
-        this.vehicleModelService = vehicleModelService;
+    public VehicleCatalogController(VehicleCatalogService vehicleCatalogService){
+        this.vehicleCatalogService = vehicleCatalogService;
     }
 
 
@@ -26,20 +26,20 @@ public class VehicleModelController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public VehicleModel create(@RequestBody VehicleModel vehicleModel){
-        System.out.println("CAR RECEBIDO: " + vehicleModel);
-        return vehicleModelService.save(vehicleModel);
+    public VehicleCatalog create(@RequestBody VehicleCatalog vehicleCatalog){
+        System.out.println("CAR RECEBIDO: " + vehicleCatalog);
+        return vehicleCatalogService.save(vehicleCatalog);
     }
 
     @GetMapping
-    public List<VehicleModel> List(){
-        return vehicleModelService.findAll();
+    public List<VehicleCatalog> List(){
+        return vehicleCatalogService.findAll();
     }
 
 
     @GetMapping("/{id}")
-    public VehicleModel getById(@PathVariable Long id){
-        return vehicleModelService.findById(id);
+    public VehicleCatalog getById(@PathVariable Long id){
+        return vehicleCatalogService.findById(id);
     }
 
 }

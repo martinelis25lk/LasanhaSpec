@@ -1,4 +1,4 @@
-package br.com.lasanhaspec.carservice.domain.entity;
+package br.com.lasanhaspec.carservice.domain.catalog;
 
 
 import jakarta.persistence.*;
