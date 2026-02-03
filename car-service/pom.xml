@@ -11,7 +11,7 @@
 	<groupId>br.com.lasanhaspec</groupId>
 	<artifactId>vehicle-catalog-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>vehicleCatalog-service</name>
+	<name>vehicleCatalogModel-service</name>
 	<description>Car Service from project LasanhaSpec</description>
 	<url/>
 	<licenses>
