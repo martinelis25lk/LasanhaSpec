@@ -1,19 +1,28 @@
 package br.com.lasanhaspec.carservice.controller;
 
 
-import br.com.lasanhaspec.carservice.domain.catalog.VehicleCatalog;
+import br.com.lasanhaspec.carservice.domain.models.VehicleCatalogModel;
+import br.com.lasanhaspec.carservice.dto.VehiclePageDTO;
 import br.com.lasanhaspec.carservice.service.VehicleCatalogService;
+import br.com.lasanhaspec.carservice.service.VehiclePageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/vehicle-models")
+@RequestMapping("/vehicles")
 public class VehicleCatalogController {
 
 
     private final VehicleCatalogService vehicleCatalogService;
+
+    private  VehiclePageService vehiclePageService;
+
+
+    public void VehiclePageController(VehiclePageService vehiclePageService) {
+        this.vehiclePageService = vehiclePageService;
+    }
 
 
     public VehicleCatalogController(VehicleCatalogService vehicleCatalogService){
@@ -26,20 +35,31 @@ public class VehicleCatalogController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public VehicleCatalog create(@RequestBody VehicleCatalog vehicleCatalog){
-        System.out.println("CAR RECEBIDO: " + vehicleCatalog);
-        return vehicleCatalogService.save(vehicleCatalog);
+    public VehicleCatalogModel create(@RequestBody VehicleCatalogModel vehicleCatalogModel){
+        System.out.println("CAR RECEBIDO: " + vehicleCatalogModel);
+        return vehicleCatalogService.save(vehicleCatalogModel);
     }
 
     @GetMapping
-    public List<VehicleCatalog> List(){
+    public List<VehicleCatalogModel> List(){
         return vehicleCatalogService.findAll();
     }
 
 
     @GetMapping("/{id}")
-    public VehicleCatalog getById(@PathVariable Long id){
+    public VehicleCatalogModel getById(@PathVariable Long id){
         return vehicleCatalogService.findById(id);
+    }
+
+
+
+
+
+
+
+    @GetMapping("/{id}/page")
+    public VehiclePageDTO getVehiclePage(@PathVariable Long id) {
+        return vehiclePageService.buildVehiclePage(id);
     }
 
 }
