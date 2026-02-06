@@ -1,7 +1,7 @@
 # LasanhaSpec
 Um projeto mais intimista, mas que não deixa de ser ambicioso para todos aqueles que gostam de carros ou que querem aprender mais sobre eles.
 
-É uma plataforma backend voltada para entusiastas do mundo automotivo, das corridas e da preparação. 
+É uma plataforma voltada para entusiastas do mundo automotivo, das corridas e da preparação. 
 Com foco em análise técnica de veículos, preparação automotiva e impacto de modificações de performance, consumo e custo, utilizando arquitetura baseada em microserviços.
 
 O projeto nasceu da ideia do autor de sempre pensar nos carros como grandes legos alinhado ao prazer e curiosidade em programar coisas diferentes.
