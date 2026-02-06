@@ -21,9 +21,9 @@ public class SetupService {
 
 
     public List<SetupModel> findByVehicle(Long vehicleId){
-        //return setupRepository.findByVehicleCatalogModelId(vehicleId);
+        return setupRepository.findByVehicleCatalogModelId(vehicleId);
 
-        return null;
+        //return null;
     }
 
 

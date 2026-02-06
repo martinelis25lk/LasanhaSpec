@@ -70,11 +70,11 @@ public class VehicleCatalogModel {
         return factoryHorsepower;
     }
 
-    public Integer getFactroyTorque() {
+    public Integer getFactoryTorque() {
         return factoryTorque;
     }
 
-    public AspirationType getAspirationType() {
+    public String getAspirationType() {
         return aspirationType;
     }
 

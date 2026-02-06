@@ -18,7 +18,7 @@ public class VehiclePageService {
 
 
 
-    public void vehiclePageService(VehicleCatalogService vehicleCatalogService, SetupService setupService){
+    public  VehiclePageService(VehicleCatalogService vehicleCatalogService, SetupService setupService){
 
         this.vehicleCatalogService = vehicleCatalogService;
         this.setupService = setupService;
@@ -29,7 +29,7 @@ public class VehiclePageService {
 
         VehicleCatalogModel vehicle = vehicleCatalogService.findById(vehicleId);
 
-        List<SetupModel> setups = (List<SetupModel>) setupService.findByVehicle(vehicle.getId());
+        List<SetupModel> setups = setupService.findByVehicle(vehicle.getId());
         // aqui só mapeamento, sem regra
         return  VehiclePageMapper.toDTO(vehicle, setups);
 

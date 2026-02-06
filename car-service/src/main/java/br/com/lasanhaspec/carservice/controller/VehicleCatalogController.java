@@ -16,17 +16,19 @@ public class VehicleCatalogController {
 
 
     private final VehicleCatalogService vehicleCatalogService;
-
-    private  VehiclePageService vehiclePageService;
-
-
-    public void VehiclePageController(VehiclePageService vehiclePageService) {
-        this.vehiclePageService = vehiclePageService;
-    }
+    private  final VehiclePageService vehiclePageService;
 
 
-    public VehicleCatalogController(VehicleCatalogService vehicleCatalogService){
+
+
+
+    public VehicleCatalogController(
+            VehicleCatalogService vehicleCatalogService,
+            VehiclePageService vehiclePageService){
+
+
         this.vehicleCatalogService = vehicleCatalogService;
+        this.vehiclePageService = vehiclePageService;
     }
 
 
@@ -36,7 +38,7 @@ public class VehicleCatalogController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public VehicleCatalogModel create(@RequestBody VehicleCatalogModel vehicleCatalogModel){
-        System.out.println("CAR RECEBIDO: " + vehicleCatalogModel);
+        System.out.println("CARRRO RECEBIDO: " + vehicleCatalogModel);
         return vehicleCatalogService.save(vehicleCatalogModel);
     }
 
@@ -54,12 +56,8 @@ public class VehicleCatalogController {
 
 
 
-
-
-
-    @GetMapping("/{id}/page")
-    public VehiclePageDTO getVehiclePage(@PathVariable Long id) {
-        return vehiclePageService.buildVehiclePage(id);
-    }
-
 }
+
+
+
+

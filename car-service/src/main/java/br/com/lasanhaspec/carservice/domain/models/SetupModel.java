@@ -43,6 +43,7 @@ public class SetupModel {
 
     private String createdBy; // ex: "Comunidade", "Curadoria", "Admin"
 
+    @Getter
     private EngineStage engineStage; // STOCK, STAGE_1, STAGE_2
 
     private Integer targetHorsePower;
@@ -105,10 +106,6 @@ public class SetupModel {
         this.createdBy = createdBy;
     }
 
-    public EngineStage getEngineStage() {
-        return engineStage;
-    }
-
     public void setEngineStage(EngineStage engineStage) {
         this.engineStage = engineStage;
     }
@@ -137,7 +134,7 @@ public class SetupModel {
         this.reliability = reliability;
     }
 
-    public UsageType getUsage() {
+    public String getUsage() {
         return usage;
     }
 

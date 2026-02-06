@@ -1,5 +1,11 @@
 package br.com.lasanhaspec.carservice.dto;
 
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CommunitySetupDTO {
 
     private Long id;
