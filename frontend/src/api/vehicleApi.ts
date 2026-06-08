@@ -1,6 +1,5 @@
 import api from "./api";
 
-// ── User Vehicles ──────────────────────────────────────────
 export const getUserVehicles = async () => {
   const response = await api.get("/user-vehicles/me");
   return response.data;
@@ -31,14 +30,12 @@ export const deleteUserVehicle = async (id: number) => {
   await api.delete(`/user-vehicles/${id}`);
 };
 
-// ── Imagens de veículo ─────────────────────────────────────
-export const uploadVehicleImage = async (vehicleId: number, file: File) => {
+// Bug 4 corrigido: sem Content-Type manual — Axios define o boundary automaticamente
+export const uploadVehicleImage = async (vehicleId: number, file: File): Promise<string> => {
   const formData = new FormData();
   formData.append("file", file);
-  const response = await api.post(`/user-vehicles/${vehicleId}/images`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-  return response.data; // retorna a URL
+  const response = await api.post(`/user-vehicles/${vehicleId}/images`, formData);
+  return response.data;
 };
 
 export const deleteVehicleImage = async (vehicleId: number, imageId: number) => {
@@ -49,7 +46,6 @@ export const setPrimaryImage = async (vehicleId: number, imageId: number) => {
   await api.put(`/user-vehicles/${vehicleId}/images/${imageId}/primary`);
 };
 
-// ── Catalog ────────────────────────────────────────────────
 export const getCatalogVehicles = async () => {
   const response = await api.get("/catalog/vehicles");
   return response.data;

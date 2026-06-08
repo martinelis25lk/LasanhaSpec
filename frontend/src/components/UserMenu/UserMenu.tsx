@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { clearVehicleCache } from "../../hooks/useUserVehicles";
 import "./UserMenu.css";
 
 const IconUser = () => (
@@ -68,9 +69,10 @@ export default function UserMenu() {
   }, []);
 
   function handleLogout() {
-    localStorage.removeItem("token");
-    navigate("/login");
-  }
+  clearVehicleCache(); 
+  localStorage.removeItem("token");
+  navigate("/login");
+}
 
   function go(path: string) {
     setOpen(false);
