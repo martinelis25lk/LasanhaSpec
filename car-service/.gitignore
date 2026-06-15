@@ -34,8 +34,12 @@ build/
 
 ### VS Code ###
 .vscode/
+application.yml
 application-local.yml
+*.env
 
 
 
 
+application.yml 
+application-local.yml 
