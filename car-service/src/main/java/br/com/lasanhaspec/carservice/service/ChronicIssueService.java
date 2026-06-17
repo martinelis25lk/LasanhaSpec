@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class ChronicIssueService {
 
@@ -26,6 +29,7 @@ public class ChronicIssueService {
     private final ReliabilityScoreCalculator reliabilityScoreCalculator;
     private final UserVehicleRepository userVehicleRepository;
     private final UserRepository userRepository;
+    private static final Logger log = LoggerFactory.getLogger(ChronicIssueService.class);
 
 
 
@@ -68,6 +72,9 @@ public class ChronicIssueService {
             throw new BusinessException("You must have this vehicle model in your garage to create a chronic issue");
         }
         //cria a entidade nova
+
+        log.info("User {} created chronic issue '{}' for vehicle model {}",
+                email, user.getFullName(), model.getId());
 
         ChronicIssue chronic = new ChronicIssue();
 

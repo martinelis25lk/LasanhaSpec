@@ -11,6 +11,8 @@ import br.com.lasanhaspec.carservice.exception.ResourceNotFoundException;
 import br.com.lasanhaspec.carservice.repository.ChronicIssueRepository;
 import br.com.lasanhaspec.carservice.repository.IssueVoteRepository;
 import br.com.lasanhaspec.carservice.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class IssueVoteService {
     private final IssueVoteRepository issueVoteRepository;
     private final ChronicIssueRepository chronicIssueRepository;
     private final UserRepository userRepository;
+    private static final Logger log = LoggerFactory.getLogger(IssueVoteService.class);
 
 
 
@@ -90,6 +93,9 @@ public class IssueVoteService {
         if (chronicIssue.getUsefulVotes() >= 10
                 && chronicIssue.getStatus() == IssueStatus.PENDING) {
             chronicIssue.setStatus(IssueStatus.IN_REVIEW);
+
+            log.info("Chronic issue {} promoted to IN_REVIEW with {} useful votes",
+                    chronicIssue.getId(), chronicIssue.getUsefulVotes());
         }
 
         chronicIssueRepository.save(chronicIssue);

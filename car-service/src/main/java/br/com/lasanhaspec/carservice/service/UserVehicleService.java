@@ -15,6 +15,8 @@ import br.com.lasanhaspec.carservice.repository.UserRepository;
 import br.com.lasanhaspec.carservice.repository.UserVehicleRepository;
 import br.com.lasanhaspec.carservice.repository.VehicleCatalogRepository;
 import br.com.lasanhaspec.carservice.repository.VehicleImageRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +34,7 @@ public class UserVehicleService {
     private final S3StorageService storageService;
     private final VehicleCatalogRepository vehicleCatalogRepository;
     private final UserRepository userRepository;
+    private static final Logger log = LoggerFactory.getLogger(UserVehicleService.class);
 
     private static final long MAX_SIZE = 5 * 1024 * 1024; // 5mb
 
@@ -196,6 +199,9 @@ public class UserVehicleService {
     }
 
 
+
+
+
     public void deleteVehicleImage(Long vehicleId, Long imageId, String email){
 
         UserVehicle vehicle = getOwnedVehicle(vehicleId, email);
@@ -212,6 +218,9 @@ public class UserVehicleService {
                 !image.getUserVehicle().getId().equals(vehicleId)) {
             throw new BusinessException("Image does not belong to vehicle");
         }
+
+        log.info("User {} added vehicle '{}' to garage",
+                email,  vehicle.getNickname());
 
         storageService.deleteFile(image.getS3Key());
         vehicleImageRepository.delete(image);

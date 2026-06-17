@@ -12,6 +12,9 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.IOException;
 import java.util.UUID;
@@ -21,6 +24,7 @@ public class S3StorageService implements  StorageService{
 
     private final S3Client s3Client;
     private final String bucketName;
+    private static final Logger log = LoggerFactory.getLogger(S3StorageService.class);
 
 
 
@@ -56,7 +60,9 @@ public class S3StorageService implements  StorageService{
                     RequestBody.fromBytes(file.getBytes())
             );
         } catch (IOException e) {
-            throw new RuntimeException("Error during upload service kkkk S3StorageService", e);
+            //log.error("FIPE API request failed for brandCode={}, modelCode={}, yearCode={}: {}",
+             //       brandCode, modelCode, yearCode, e.getMessage(), e);
+            return null;
         }
 
         String url = "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
