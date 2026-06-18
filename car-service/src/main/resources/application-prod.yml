@@ -16,3 +16,7 @@ logging:
     root: INFO
     br.com.lasanhaspec: INFO
     org.hibernate.SQL: OFF
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
