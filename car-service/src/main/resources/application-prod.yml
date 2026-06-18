@@ -11,3 +11,8 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure: DEBUG
+    com.zaxxer.hikari: DEBUG
