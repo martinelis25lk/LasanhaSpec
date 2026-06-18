@@ -1,4 +1,6 @@
 spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
   jpa:
     hibernate:
       ddl-auto: validate
