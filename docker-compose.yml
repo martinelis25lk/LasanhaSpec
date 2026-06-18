@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: lasanhaspec
+      POSTGRES_USER: guilherme
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  car-service:
+    build: ./car-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://postgres:5432/lasanhaspec
+      DB_USERNAME: guilherme
+      DB_PASSWORD: 123456
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      MARKET_SERVICE_URL: http://market-service:8081
+    depends_on:
+      - postgres
+
+  market-service:
+    build: ./market-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      - car-service
+
+volumes:
+  postgres_data:
