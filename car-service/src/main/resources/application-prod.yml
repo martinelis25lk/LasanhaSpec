@@ -1,22 +1,13 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: ${DATABASE_URL}
+    driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: false
+
   flyway:
     enabled: true
     locations: classpath:db/migration
-
-logging:
-  level:
-    root: INFO
-    br.com.lasanhaspec: INFO
-    org.hibernate.SQL: OFF
-
-jwt:
-  secret: ${JWT_SECRET}
-  expiration: ${JWT_EXPIRATION}
