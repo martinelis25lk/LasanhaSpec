@@ -17,7 +17,3 @@ spring:
     user: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
 
-logging:
-  level:
-    org.springframework.boot.autoconfigure: DEBUG
-    com.zaxxer.hikari: DEBUG
