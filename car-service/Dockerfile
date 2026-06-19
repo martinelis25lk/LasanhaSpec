@@ -1,10 +1,10 @@
-# cache-bust: 8
+# cache-bust: 9
 # -------- STAGE 1: build --------
 FROM maven:3.9.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-ARG CACHEBUST=8
+ARG CACHEBUST=9
 COPY . .
 
 RUN mvn clean package -DskipTests

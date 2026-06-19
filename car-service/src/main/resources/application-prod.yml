@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://postgres.railway.internal:5432/railway
+    username: postgres
+    password: pmWLSCwQmDYUoUhQMHcmyPmhviAFtjxp
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -11,11 +11,3 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:
     enabled: false
-
-    locations: classpath:db/migration
-    baseline-on-migrate: true
-    baseline-version: 0
-    url: ${SPRING_DATASOURCE_URL}
-    user: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-
