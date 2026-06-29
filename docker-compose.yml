@@ -5,13 +5,34 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_DB: lasanhaspec
-      POSTGRES_USER: guilherme
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    # Healthcheck: garante que o postgres está PRONTO, não só iniciado
+    # O depends_on dos outros serviços só vai liberar após isso passar
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"    # porta AMQP (usada pelo Spring Boot)
+      - "15672:15672"  # painel de administração web
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
 
   car-service:
     build: ./car-service
@@ -19,14 +40,21 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      DB_URL: jdbc:postgresql://postgres:5432/lasanhaspec
-      DB_USERNAME: guilherme
-      DB_PASSWORD: 123456
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: ${JWT_EXPIRATION}
-      MARKET_SERVICE_URL: http://market-service:8081
+      MARKET_SERVICE_URL: ${MARKET_SERVICE_URL}
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy   # espera o postgres estar PRONTO
+      rabbitmq:
+        condition: service_healthy   # espera o rabbit estar PRONTO
 
   market-service:
     build: ./market-service
@@ -34,8 +62,15 @@ services:
       - "8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: prod
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
     depends_on:
-      - car-service
+      rabbitmq:
+        condition: service_healthy
+      car-service:
+        condition: service_started   # car-service não tem healthcheck ainda, usa service_started
 
 volumes:
   postgres_data:
