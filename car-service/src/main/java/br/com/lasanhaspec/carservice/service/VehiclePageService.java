@@ -7,6 +7,8 @@ import br.com.lasanhaspec.carservice.dto.VehiclePageDTO;
 import br.com.lasanhaspec.carservice.infrastructure.client.MarketServiceClient;
 import br.com.lasanhaspec.carservice.mappers.VehiclePageMapper;
 import org.springframework.stereotype.Service;
+import br.com.lasanhaspec.carservice.dto.FipeHistoryPointDTO;
+import java.util.Collections;
 
 import java.util.List;
 
@@ -53,6 +55,23 @@ public class VehiclePageService {
 
         return  VehiclePageMapper.toDTO(vehicle, setups, fipePrice);
 
+    }
+
+    public List<FipeHistoryPointDTO> getFipeHistory(Long vehicleId) {
+
+        VehicleCatalogModel vehicle = vehicleCatalogService.findById(vehicleId);
+
+        if (vehicle.getFipeBrandCode() == null ||
+                vehicle.getFipeModelCode() == null ||
+                vehicle.getFipeYearCode() == null) {
+            return Collections.emptyList();
+        }
+
+        return marketServiceClient.getFipeHistory(
+                vehicle.getFipeBrandCode(),
+                vehicle.getFipeModelCode(),
+                vehicle.getFipeYearCode()
+        );
     }
 
 }

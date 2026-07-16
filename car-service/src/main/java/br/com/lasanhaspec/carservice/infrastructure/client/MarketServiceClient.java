@@ -1,10 +1,14 @@
 package br.com.lasanhaspec.carservice.infrastructure.client;
 
+
+import br.com.lasanhaspec.carservice.dto.FipeHistoryPointDTO;
 import br.com.lasanhaspec.carservice.dto.FipeResponseDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 public class MarketServiceClient {
@@ -37,6 +41,28 @@ public class MarketServiceClient {
             return null;
         }
     }
+
+    public List<FipeHistoryPointDTO> getFipeHistory(String brandCode, String modelCode, String yearCode) {
+        try {
+            List<FipeHistoryPointDTO> history = webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/market/fipe/history")
+                            .queryParam("brandCode", brandCode)
+                            .queryParam("modelCode", modelCode)
+                            .queryParam("yearCode", yearCode)
+                            .build())
+                    .retrieve()
+                    .bodyToFlux(FipeHistoryPointDTO.class)
+                    .collectList()
+                    .block();
+            return history != null ? history : Collections.emptyList();
+        } catch (Exception e) {
+            log.warn("FIPE history unavailable for vehicle request: {}", e.getMessage(), e);
+            return Collections.emptyList();
+        }
+    }
+
+
 
 
 
