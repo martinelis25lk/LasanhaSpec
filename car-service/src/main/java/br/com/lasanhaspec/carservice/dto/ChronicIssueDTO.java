@@ -12,11 +12,11 @@ public class ChronicIssueDTO {
 
 
     @NotBlank
-    @Size(min = 3, max = 30)
+    @Size(min = 3, max = 100)
     private String title;
 
     @NotBlank
-    @Size(min = 3, max = 30)
+    @Size(min = 3, max = 2000)
     private String description;
 
     @NotBlank

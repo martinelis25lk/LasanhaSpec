@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 public class FipePriceHistoryPointDTO {
 
     private String referencedMonth;
-    private String price;
+    private BigDecimal price;
     private LocalDateTime fetchedAt;
     }
 
-}
+

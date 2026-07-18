@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
         indexes = {
                 @Index(
                         name = "idx_fipe_snapshot_lookup",
-                        columnList = "fipeBrandCode, fipeMoldeCode, fipeYearCode,fetchedAt "
+                        columnList = "fipeBrandCode, fipeModelCode, fipeYearCode, fetchedAt "
                 )
         }
 
@@ -75,4 +75,4 @@ import java.time.LocalDateTime;
             this.fetchedAt = fetchedAt;
         }
     }
-}
+

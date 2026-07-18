@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public class FipePriceSnapshotRepository extends JpaRepository<FipePriceSnapshot, Long> {
+public interface FipePriceSnapshotRepository extends JpaRepository<FipePriceSnapshot, Long> {
 
 
     // "Cache": me dá o retrato mais recente que eu já tenho pra esse veículo

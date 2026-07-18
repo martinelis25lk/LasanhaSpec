@@ -6,6 +6,8 @@ import br.com.lasanhaspec.market_service.service.FipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/market/fipe")
 public class FipeController {
@@ -32,15 +34,13 @@ public class FipeController {
     }
 
     @GetMapping("/history")
-    public List<FipericeHistoryPointDTO> getHistory(
-            @RequestParam String brandcocde,
+    public List<FipePriceHistoryPointDTO> getHistory(
+            @RequestParam String brandCode,
             @RequestParam String modelCode,
             @RequestParam String yearCode
     )
     {
-
-        return fipeService.getHistory(brandcocde, modelCode, yearCode);
-
+        return fipeService.getHistory(brandCode, modelCode, yearCode);
     }
 
 
