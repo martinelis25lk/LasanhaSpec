@@ -1,10 +1,7 @@
 package br.com.lasanhaspec.carservice.service;
 
-
-import br.com.lasanhaspec.carservice.domain.enums.IssueCategory;
-import br.com.lasanhaspec.carservice.domain.enums.IssueSeverity;
-import br.com.lasanhaspec.carservice.domain.enums.IssueStatus;
-import br.com.lasanhaspec.carservice.domain.enums.RepairComplexity;
+import br.com.lasanhaspec.carservice.domain.enums.Role;
+import br.com.lasanhaspec.carservice.domain.enums.*;
 import br.com.lasanhaspec.carservice.domain.models.*;
 import br.com.lasanhaspec.carservice.dto.*;
 import br.com.lasanhaspec.carservice.exception.BusinessException;
@@ -68,7 +65,11 @@ public class ChronicIssueService {
         boolean userHasThisModel = userVehicleRepository
                 .existsByUserIdAndVehicleCatalogModelId(user.getId(), model.getId());
 
-        if (!userHasThisModel) {
+
+        boolean isAdmin = user.getRole() == Role.ROLE_ADMIN; // ajuste o nome do enum/campo conforme o seu User
+
+
+        if (!userHasThisModel && !isAdmin) {
             throw new BusinessException("You must have this vehicle model in your garage to create a chronic issue");
         }
         //cria a entidade nova
