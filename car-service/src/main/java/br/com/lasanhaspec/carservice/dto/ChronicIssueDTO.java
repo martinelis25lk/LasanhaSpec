@@ -28,11 +28,11 @@ public class ChronicIssueDTO {
     private String category;
 
 
-    @NotNull
+
     @PositiveOrZero
     private Integer millageMin;
 
-    @NotNull
+
     @PositiveOrZero
     private Integer millageMax;
 
