@@ -83,7 +83,7 @@ public class ChronicIssueService {
         chronic.setTitle(chronicIssueDTO.getTitle());
         chronic.setDescription(chronicIssueDTO.getDescription());
         chronic.setSeverity(IssueSeverity.valueOf(chronicIssueDTO.getSeverity()));
-        chronic.setStatus(IssueStatus.PENDING);
+        chronic.setStatus(isAdmin ? IssueStatus.APPROVED : IssueStatus.PENDING);
         chronic.setIssueCategory(IssueCategory.valueOf(chronicIssueDTO.getCategory()));
         chronic.setMillageMax(chronicIssueDTO.getMillageMax());
         chronic.setMillageMin(chronicIssueDTO.getMillageMin());
