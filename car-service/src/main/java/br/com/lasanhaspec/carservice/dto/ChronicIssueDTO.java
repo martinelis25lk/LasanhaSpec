@@ -37,11 +37,10 @@ public class ChronicIssueDTO {
     private Integer millageMax;
 
 
-    @NotNull
+
     @PositiveOrZero
     private Integer costMin;
 
-    @NotNull
     @PositiveOrZero
     private Integer costMax;
 
