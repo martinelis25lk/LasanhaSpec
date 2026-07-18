@@ -31,6 +31,16 @@ public class ChronicIssueController {
 
     }
 
+    // GET    /chronic-issues                  listAll (com filtro opcional de status)
+    @GetMapping
+    public ResponseEntity<List<ChronicIssueCardDTO>> listAll(
+            @RequestParam(required = false) String status
+    ){
+        return ResponseEntity.ok(chronicIssueService.listAll(status));
+    }
+
+
+
 
 
     // GET    /chronic-issues/models/{id}       getModelChronicPage

@@ -7,7 +7,7 @@ import br.com.lasanhaspec.carservice.dto.*;
 import br.com.lasanhaspec.carservice.exception.BusinessException;
 import br.com.lasanhaspec.carservice.exception.ResourceNotFoundException;
 import br.com.lasanhaspec.carservice.repository.*;
-import org.springframework.security.access.method.P;
+import org.springframework.security.access.method.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -228,21 +228,7 @@ public class ChronicIssueService {
                 .orElseThrow(() -> new ResourceNotFoundException("chronic issue not found"));
 
         //  1. mapear para card
-        ChronicIssueCardDTO cardDTO = new ChronicIssueCardDTO();
-
-        cardDTO.setId(chronicIssue.getId());
-        cardDTO.setNotUsefulVotes(chronicIssue.getNotUsefulVotes());
-        cardDTO.setUsefulVotes(chronicIssue.getUsefulVotes());
-        cardDTO.setOccurrences(chronicIssue.getOccurrences());
-        cardDTO.setSeverity(chronicIssue.getSeverity().name());
-        cardDTO.setTitle(chronicIssue.getTitle());
-        cardDTO.setDescription(chronicIssue.getDescription());
-
-        cardDTO.setMillageMax(chronicIssue.getMillageMax());
-
-        cardDTO.setMillageMin(chronicIssue.getMillageMin());
-        cardDTO.setCostMin(chronicIssue.getCostMin());
-        cardDTO.setCostMax(chronicIssue.getCostMax());
+        ChronicIssueCardDTO cardDTO = mapToCardDTO(chronicIssue);
 
         //  2. buscar occurrences
         List<IssueOcurrence> occurrences = issueOccurrenceRepository
@@ -309,21 +295,8 @@ public class ChronicIssueService {
         //4 - mapeia cada ChronicIssue para ChronicIssueCardDTO
 
         List<ChronicIssueCardDTO> issueDTOs = issues.stream()
-                .map(issue -> {
-                    ChronicIssueCardDTO dto = new ChronicIssueCardDTO();
-                    dto.setId(issue.getId());
-                    dto.setTitle(issue.getTitle());
-                    dto.setCostMax(issue.getCostMax());
-                    dto.setCostMin(issue.getCostMin());
-                    dto.setDescription(issue.getDescription());
-                    dto.setSeverity(issue.getSeverity().name());
-                    dto.setOccurrences(issue.getOccurrences());
-                    dto.setMillageMax(issue.getMillageMax());
-                    dto.setMillageMin(issue.getMillageMin());
-                    dto.setUsefulVotes(issue.getUsefulVotes());
-                    dto.setNotUsefulVotes(issue.getNotUsefulVotes());
-                    return dto;
-                }).toList();
+                .map(this::mapToCardDTO)
+                .toList();
 
         VehicleChronicPageDTO dto = new VehicleChronicPageDTO();
 
@@ -342,6 +315,42 @@ public class ChronicIssueService {
 
 
 
+    }
+
+
+    public List<ChronicIssueCardDTO> listAll(String status) {
+
+        List<ChronicIssue> issues;
+
+        if (status == null || status.isBlank()) {
+            issues = chronicIssueRepository.findAll();
+        } else {
+            IssueStatus parsedStatus;
+            try {
+                parsedStatus = IssueStatus.valueOf(status.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new BusinessException("Status invalido: " + status);
+            }
+            issues = chronicIssueRepository.findByStatus(parsedStatus);
+        }
+
+        return issues.stream().map(this::mapToCardDTO).toList();
+    }
+
+    private ChronicIssueCardDTO mapToCardDTO(ChronicIssue issue) {
+        ChronicIssueCardDTO dto = new ChronicIssueCardDTO();
+        dto.setId(issue.getId());
+        dto.setTitle(issue.getTitle());
+        dto.setDescription(issue.getDescription());
+        dto.setSeverity(issue.getSeverity().name());
+        dto.setCostMin(issue.getCostMin());
+        dto.setCostMax(issue.getCostMax());
+        dto.setMillageMin(issue.getMillageMin());
+        dto.setMillageMax(issue.getMillageMax());
+        dto.setOccurrences(issue.getOccurrences());
+        dto.setUsefulVotes(issue.getUsefulVotes());
+        dto.setNotUsefulVotes(issue.getNotUsefulVotes());
+        return dto;
     }
 
 

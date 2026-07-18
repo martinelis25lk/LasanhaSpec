@@ -13,6 +13,7 @@ public interface ChronicIssueRepository extends JpaRepository<ChronicIssue, Long
 
 
 
+    List<ChronicIssue> findByStatus(IssueStatus status);
 
 
 }
