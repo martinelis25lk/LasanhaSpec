@@ -34,4 +34,33 @@ public class Comments {
     public void prePersist() { this.createdAt = LocalDateTime.now(); }
 
 
+    public void setUser(User user) {
+    }
+
+    public void setChronicIssue(ChronicIssue issue) {
+    }
+
+    public void setContent(String content) {
+    }
+
+    public void setParentComment(Comments parent) {
+    }
+
+    public User getUser() {
+    }
+
+    public Long getId() {
+    }
+
+    public String getContent() {
+    }
+
+    public LocalDateTime getCreatedAt() {
+    }
+
+    public Comments getParentComment() {
+    }
+
+    public Comments getChronicIssue() {
+    }
 }
