@@ -6,8 +6,8 @@ import br.com.lasanhaspec.carservice.domain.models.User;
 import br.com.lasanhaspec.carservice.domain.enums.Role;
 import br.com.lasanhaspec.carservice.dto.CommentDTO;
 import br.com.lasanhaspec.carservice.dto.CreateCommentsDTO;
-import br.com.lasanhaspec.carservice.exceptions.BusinessException;
-import br.com.lasanhaspec.carservice.exceptions.ResourceNotFoundException;
+import br.com.lasanhaspec.carservice.exception.BusinessException;
+import br.com.lasanhaspec.carservice.exception.ResourceNotFoundException;
 import br.com.lasanhaspec.carservice.repository.ChronicIssueRepository;
 import br.com.lasanhaspec.carservice.repository.CommentsRepository;
 import br.com.lasanhaspec.carservice.repository.UserRepository;
@@ -18,14 +18,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CommentService {
+public class CommentsService {
 
     private final CommentsRepository commentRepository;
     private final ChronicIssueRepository chronicIssueRepository;
     private final UserRepository userRepository;
     private final UserVehicleRepository userVehicleRepository;
 
-    public CommentService(CommentsRepository commentRepository,
+    public CommentsService(CommentsRepository commentRepository,
                           ChronicIssueRepository chronicIssueRepository,
                           UserRepository userRepository,
                           UserVehicleRepository userVehicleRepository) {
