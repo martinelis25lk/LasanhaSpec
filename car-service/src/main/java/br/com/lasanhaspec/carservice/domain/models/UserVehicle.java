@@ -126,6 +126,9 @@ public class UserVehicle {
         this.currentWeight = currentWeight;
     }
 
+    public void setUser(User owner) {
+    }
+
 
     //
 
