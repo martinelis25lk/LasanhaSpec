@@ -2,7 +2,7 @@ package br.com.lasanhaspec.carservice.controller;
 
 import br.com.lasanhaspec.carservice.dto.CommentDTO;
 import br.com.lasanhaspec.carservice.dto.CreateCommentsDTO;
-import br.com.lasanhaspec.carservice.service.CommentService;
+import br.com.lasanhaspec.carservice.service.CommentsService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -12,11 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/chronic-issues/{issueId}/comments")
-public class CommentController {
+public class CommentsController {
 
-    private final CommentService commentService;
+    private final CommentsService commentService;
 
-    public CommentController(CommentService commentService) {
+    public CommentsController(CommentsService commentService) {
         this.commentService = commentService;
     }
 

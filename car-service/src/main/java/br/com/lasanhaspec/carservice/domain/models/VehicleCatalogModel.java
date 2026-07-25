@@ -206,5 +206,37 @@ public class VehicleCatalogModel {
         this.gearCount = geraCount;
     }
 
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public void setEngineCode(String engineCode) {
+        this.engineCode = engineCode;
+    }
+
+    public void setFactoryHorsepower(Integer factoryHorsepower) {
+        this.factoryHorsepower = factoryHorsepower;
+    }
+
+    public void setFactoryTorque(Integer factoryTorque) {
+        this.factoryTorque = factoryTorque;
+    }
+
+    public void setAspirationType(AspirationType aspirationType) {
+        this.aspirationType = aspirationType;
+    }
+
+    public void setFactoryWeight(Integer factoryWeight) {
+        this.factoryWeight = factoryWeight;
+    }
+
 
 }

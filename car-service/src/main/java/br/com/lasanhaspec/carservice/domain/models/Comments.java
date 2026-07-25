@@ -34,6 +34,7 @@ public class Comments {
     public void setChronicIssue(ChronicIssue issue) { this.chronicIssue = issue; }
     public void setContent(String content) { this.content = content; }
     public void setParentComment(Comments parent) { this.parentComment = parent; }
+    public void setId(Long id) {this.id = id;}
 
     public User getUser() { return user; }
     public Long getId() { return id; }
