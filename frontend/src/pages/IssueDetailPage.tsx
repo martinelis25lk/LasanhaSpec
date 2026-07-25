@@ -8,6 +8,8 @@ import { useCurrentUser } from "../hooks/useCurrentUser";
 import { getUserVehicles } from "../api/vehicleApi";
 import "./IssueDetailPage.css";
 
+import CommentsSection from "../components/ChronicIssue/CommentsSection";
+
 const complexityColor: Record<string, string> = {
   DIY: "#00ffae", INTERMEDIATE: "#f59e0b", PROFESSIONAL: "#ef4444",
 };
@@ -160,6 +162,8 @@ export default function IssueDetailPage() {
           </div>
         </div>
       )}
+
+      <CommentsSection issueId={issueId} />
 
       <div className="idp-footer">
         <div className="idp-vote-row">

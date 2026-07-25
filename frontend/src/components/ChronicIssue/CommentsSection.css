@@ -1,0 +1,43 @@
+.comment-new-box { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.comment-new-box textarea {
+  background: #1e1e28; border: 1px solid #2a2a35; border-radius: 8px;
+  color: #f0f0f0; font-size: 13px; padding: 10px; resize: vertical; min-height: 60px;
+}
+.comment-submit-btn {
+  all: unset; cursor: pointer; align-self: flex-end; font-size: 13px; font-weight: 600;
+  padding: 8px 16px; border-radius: 6px; background: rgba(0,255,174,.12);
+  color: #00ffae; border: 1px solid rgba(0,255,174,.3); transition: background 0.14s;
+}
+.comment-submit-btn:hover { background: rgba(0,255,174,.22); }
+.comment-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.comment-loading, .comment-empty { color: #666; font-size: 13px; text-align: center; padding: 16px 0; }
+
+.comment-list { display: flex; flex-direction: column; gap: 12px; }
+.comment-item { background: #1e1e28; border-radius: 8px; padding: 12px 14px; }
+.comment-reply { margin-top: 8px; background: #232330; }
+
+.comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.comment-author { font-size: 13px; font-weight: 600; color: #c0c0cc; display: flex; align-items: center; gap: 6px; }
+.comment-badge {
+  font-size: 10px; font-weight: 600; color: #00ffae; background: rgba(0,255,174,.12);
+  border: 1px solid rgba(0,255,174,.3); padding: 1px 6px; border-radius: 4px;
+}
+.comment-time { font-size: 11px; color: #555; }
+.comment-content { color: #aaa; font-size: 13px; line-height: 1.5; margin: 0 0 8px; }
+
+.comment-actions { display: flex; gap: 12px; }
+.comment-action-btn { all: unset; cursor: pointer; font-size: 12px; color: #666; }
+.comment-action-btn:hover { color: #00ffae; }
+.comment-delete:hover { color: #ef4444; }
+
+.comment-reply-box { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.comment-reply-box textarea {
+  background: #16161b; border: 1px solid #2a2a35; border-radius: 6px;
+  color: #f0f0f0; font-size: 12px; padding: 8px; resize: vertical; min-height: 50px;
+}
+.comment-reply-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.comment-reply-actions button { all: unset; cursor: pointer; font-size: 12px; padding: 6px 12px; border-radius: 6px; }
+.comment-reply-submit { background: rgba(0,255,174,.12); color: #00ffae; border: 1px solid rgba(0,255,174,.3); }
+
+.comment-replies { margin-top: 8px; padding-left: 16px; border-left: 2px solid #2a2a35; }
