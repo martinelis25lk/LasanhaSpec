@@ -25,7 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
 
-    
+
 
 
     public JwtAuthFilter(
@@ -63,7 +63,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7);
 
-        userEmail = jwtService.extractUserName(jwt);
+        try {
+            userEmail = jwtService.extractUserName(jwt);
+        } catch (io.jsonwebtoken.JwtException | IllegalArgumentException e) {
+            // token invalido/expirado/malformado: segue sem autenticar,
+            // o SecurityConfig decide se o endpoint exige auth (retorna 401/403 normalmente)
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         if (
                 userEmail != null &&
