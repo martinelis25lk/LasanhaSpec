@@ -116,10 +116,16 @@ public class CommentsService {
         dto.setId(comment.getId());
         dto.setAuthorId(comment.getUser().getId());
         dto.setAuthorName(comment.getUser().getFullName());
+        dto.setAuthorUsername(comment.getUser().getUsername());
         dto.setContent(comment.getContent());
         dto.setCreatedAt(comment.getCreatedAt());
         dto.setOwnsVehicle(userVehicleRepository.existsByUserIdAndVehicleCatalogModelId(
                 comment.getUser().getId(), issue.getVehicleCatalogModel().getId()));
+
+        if (comment.getParentComment() != null) {
+            dto.setParentAuthorUsername(comment.getParentComment().getUser().getUsername());
+        }
+
         return dto;
     }
 }

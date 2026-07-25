@@ -6,6 +6,8 @@ import java.util.List;
 public class CommentDTO {
     private Long id;
     private Long authorId;
+    private String authorUsername;
+    private String parentAuthorUsername;
     private String authorName;
     private String content;
     private LocalDateTime createdAt;
@@ -26,4 +28,8 @@ public class CommentDTO {
     public void setOwnsVehicle(boolean ownsVehicle) { this.ownsVehicle = ownsVehicle; }
     public List<CommentDTO> getReplies() { return replies; }
     public void setReplies(List<CommentDTO> replies) { this.replies = replies; }
+    public String getAuthorUsername() { return authorUsername; }
+    public void setAuthorUsername(String authorUsername) { this.authorUsername = authorUsername; }
+    public String getParentAuthorUsername() { return parentAuthorUsername; }
+    public void setParentAuthorUsername(String parentAuthorUsername) { this.parentAuthorUsername = parentAuthorUsername; }
 }
