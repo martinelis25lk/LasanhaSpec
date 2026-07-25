@@ -15,7 +15,6 @@ import java.util.List;
 
 
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/user-vehicles")
 public class UserVehicleController {
