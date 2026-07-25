@@ -6,11 +6,12 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:
-    enabled: false
+    enabled: true
+    locations: classpath:db/migrations
 
 aws:
   s3:
@@ -24,3 +25,6 @@ aws:
 jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRATION}
+
+cors:
+  allowed-origins: ${ALLOWED_ORIGINS}
