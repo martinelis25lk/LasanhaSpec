@@ -4,10 +4,12 @@ export interface Comment {
   id: number;
   authorId: number;
   authorName: string;
+  authorUsername: string;
   authorEmail: string;
   content: string;
   createdAt: string;
   ownsVehicle: boolean;
+  parentAuthorUsername?: string;
   replies: Comment[];
 }
 

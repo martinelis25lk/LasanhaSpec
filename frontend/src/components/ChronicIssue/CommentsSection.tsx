@@ -53,11 +53,17 @@ function CommentItem({
       <div className="comment-header">
         <span className="comment-author">
           {comment.authorName}
+          <span className="comment-username">@{comment.authorUsername}</span>
           {comment.ownsVehicle && <span className="comment-badge">dono confirmado</span>}
         </span>
         <span className="comment-time">{timeAgo(comment.createdAt)}</span>
       </div>
-      <p className="comment-content">{comment.content}</p>
+        <p className="comment-content">
+        {depth > 0 && comment.parentAuthorUsername && (
+          <span className="comment-mention">@{comment.parentAuthorUsername} </span>
+        )}
+        {comment.content}
+      </p>
       <div className="comment-actions">
         <button className="comment-action-btn" onClick={() => setShowReplyBox((v) => !v)}>
           Responder
