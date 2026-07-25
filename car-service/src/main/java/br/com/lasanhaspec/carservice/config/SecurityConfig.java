@@ -60,10 +60,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,  "/catalog/vehicles/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/catalog/vehicles/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/catalog/vehicles/**").hasAuthority("ROLE_ADMIN")
-                        //.requestMatchers(HttpMethod.GET, "/catalog/vehicles/**").hasAuthority("ROLE_ADMIN")
+
 
                         .requestMatchers(HttpMethod.PUT, "/chronic-issues/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/chronic-issues/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/chronic-issues/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
