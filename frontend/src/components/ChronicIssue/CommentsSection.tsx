@@ -3,6 +3,9 @@ import { getComments, createComment, deleteComment, type Comment } from "../../a
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import "./CommentsSection.css";
 
+
+const MAX_VISUAL_INDENT_DEPTH = 4;
+
 function timeAgo(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime();
   const mins = Math.floor(diffMs / 60000);
@@ -20,11 +23,12 @@ interface CommentItemProps {
   isAdmin: boolean;
   onReplySubmit: (parentId: number, content: string) => Promise<void>;
   onDelete: (commentId: number) => Promise<void>;
-  isReply?: boolean;
+  depth?: number;
 }
 
+
 function CommentItem({
-  comment, issueId, currentUserEmail, isAdmin, onReplySubmit, onDelete, isReply,
+  comment, issueId, currentUserEmail, isAdmin, onReplySubmit, onDelete, depth = 0 ,
 }: CommentItemProps) {
   const [showReplyBox, setShowReplyBox] = useState(false);
   const [replyText, setReplyText] = useState("");
@@ -45,7 +49,7 @@ function CommentItem({
   }
 
   return (
-    <div className={isReply ? "comment-item comment-reply" : "comment-item"}>
+    <div className={depth > 0 ? "comment-item comment-reply" : "comment-item"}>
       <div className="comment-header">
         <span className="comment-author">
           {comment.authorName}
@@ -55,11 +59,9 @@ function CommentItem({
       </div>
       <p className="comment-content">{comment.content}</p>
       <div className="comment-actions">
-        {!isReply && (
-          <button className="comment-action-btn" onClick={() => setShowReplyBox((v) => !v)}>
-            Responder
-          </button>
-        )}
+        <button className="comment-action-btn" onClick={() => setShowReplyBox((v) => !v)}>
+          Responder
+        </button>
         {canDelete && (
           <button
             className="comment-action-btn comment-delete"
@@ -87,7 +89,10 @@ function CommentItem({
       )}
 
       {comment.replies?.length > 0 && (
-        <div className="comment-replies">
+        <div
+          className="comment-replies"
+          style={depth >= MAX_VISUAL_INDENT_DEPTH ? { paddingLeft: 0, borderLeft: "none" } : undefined}
+        >
           {comment.replies.map((reply) => (
             <CommentItem
               key={reply.id}
@@ -97,7 +102,7 @@ function CommentItem({
               isAdmin={isAdmin}
               onReplySubmit={onReplySubmit}
               onDelete={onDelete}
-              isReply
+              depth={depth + 1}
             />
           ))}
         </div>
