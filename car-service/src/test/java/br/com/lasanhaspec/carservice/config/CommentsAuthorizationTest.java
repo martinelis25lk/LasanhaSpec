@@ -1,10 +1,11 @@
 package br.com.lasanhaspec.carservice.config;
 
-import br.com.lasanhaspec.carservice.controller.ChronicIssueController;
+import br.com.lasanhaspec.carservice.controller.CommentsController;
 import br.com.lasanhaspec.carservice.domain.enums.Role;
 import br.com.lasanhaspec.carservice.domain.models.User;
+import br.com.lasanhaspec.carservice.dto.CommentDTO;
 import br.com.lasanhaspec.carservice.filter.JwtAuthFilter;
-import br.com.lasanhaspec.carservice.service.ChronicIssueService;
+import br.com.lasanhaspec.carservice.service.CommentsService;
 import br.com.lasanhaspec.carservice.service.JwtService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,20 +18,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// Roda a cadeia real de Spring Security (JwtAuthFilter + SecurityConfig).
-// Sem "addFilters = false" de propósito: é isso que valida as regras de
-// autorização de verdade, não só o comportamento do service.
-@WebMvcTest(controllers = ChronicIssueController.class)
+// Cadeia real de Spring Security (JwtAuthFilter + SecurityConfig), sem
+// addFilters = false -- e' isso que valida as regras de autorizacao de
+// verdade, nao so o que o service faria se fosse chamado.
+@WebMvcTest(controllers = CommentsController.class)
 @Import({SecurityConfig.class, JwtAuthFilter.class, JwtService.class})
 @TestPropertySource(properties = {
         "jwt.secret=dGVzdC1zZWNyZXQta2V5LXRlc3Qtc2VjcmV0LWtleS10ZXN0LXNlY3JldC1rZXk=",
         "jwt.expiration=3600000"
 })
-class ChronicIssueAuthorizationTest {
+class CommentsAuthorizationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,76 +46,85 @@ class ChronicIssueAuthorizationTest {
     private UserDetailsService userDetailsService;
 
     @MockBean
-    private ChronicIssueService chronicIssueService;
+    private CommentsService commentsService;
 
     private User regularUser;
-    private User adminUser;
 
     @BeforeEach
     void setUp() {
         regularUser = new User();
         regularUser.setId(1L);
         regularUser.setEmail("user@test.com");
+        regularUser.setUsername("piloto123");
         regularUser.setRole(Role.ROLE_USER);
 
-        adminUser = new User();
-        adminUser.setId(2L);
-        adminUser.setEmail("admin@test.com");
-        adminUser.setRole(Role.ROLE_ADMIN);
-
         when(userDetailsService.loadUserByUsername("user@test.com")).thenReturn(regularUser);
-        when(userDetailsService.loadUserByUsername("admin@test.com")).thenReturn(adminUser);
     }
 
     private String tokenFor(User user) {
         return jwtService.generateToken(user);
     }
 
+    // -------- GET (listar comentarios) --------
+
     @Test
-    void regularUserCannotDeleteChronicIssue() throws Exception {
-        mockMvc.perform(delete("/chronic-issues/1")
+    void anonymousCannotListComments() throws Exception {
+        mockMvc.perform(get("/chronic-issues/1/comments"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void authenticatedUserCanListComments() throws Exception {
+        when(commentsService.listComments(1L)).thenReturn(List.of());
+
+        mockMvc.perform(get("/chronic-issues/1/comments")
                         .header("Authorization", "Bearer " + tokenFor(regularUser)))
+                .andExpect(status().isOk());
+    }
+
+    // -------- POST (criar comentario) --------
+
+    @Test
+    void anonymousCannotCreateComment() throws Exception {
+        mockMvc.perform(post("/chronic-issues/1/comments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"content\":\"aconteceu comigo tambem\"}"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
-    void adminCanDeleteChronicIssue() throws Exception {
-        mockMvc.perform(delete("/chronic-issues/1")
-                        .header("Authorization", "Bearer " + tokenFor(adminUser)))
-                .andExpect(status().isNoContent());
-    }
+    void authenticatedUserCanCreateComment() throws Exception {
+        when(commentsService.createComment(eq(1L), any(), eq("user@test.com")))
+                .thenReturn(42L);
 
-    @Test
-    void anonymousCannotDeleteChronicIssue() throws Exception {
-        mockMvc.perform(delete("/chronic-issues/1"))
-                .andExpect(status().isForbidden());
-    }
-    @Test
-    void regularUserCannotUpdateChronicIssue() throws Exception {
-        mockMvc.perform(put("/chronic-issues/1")
+        mockMvc.perform(post("/chronic-issues/1/comments")
                         .header("Authorization", "Bearer " + tokenFor(regularUser))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
+                        .content("{\"content\":\"aconteceu comigo tambem\"}"))
+                .andExpect(status().isOk());
+    }
+
+    // -------- DELETE (apagar comentario) --------
+    // A checagem de "so o autor ou admin pode apagar" fica no CommentsService
+    // (ja coberta em CommentsServiceTest); aqui so garantimos que o endpoint
+    // exige autenticacao antes de sequer chegar no service.
+
+    @Test
+    void anonymousCannotDeleteComment() throws Exception {
+        mockMvc.perform(delete("/chronic-issues/1/comments/5"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
-    void regularUserCannotApproveChronicIssue() throws Exception {
-        mockMvc.perform(patch("/chronic-issues/1/approve")
+    void authenticatedUserReachesDeleteEndpoint() throws Exception {
+        mockMvc.perform(delete("/chronic-issues/1/comments/5")
                         .header("Authorization", "Bearer " + tokenFor(regularUser)))
-                .andExpect(status().isForbidden());
-    }
-
-    @Test
-    void adminCanApproveChronicIssue() throws Exception {
-        mockMvc.perform(patch("/chronic-issues/1/approve")
-                        .header("Authorization", "Bearer " + tokenFor(adminUser)))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void malformedTokenNeverReturnsServerError() throws Exception {
-        mockMvc.perform(get("/chronic-issues")
+        mockMvc.perform(get("/chronic-issues/1/comments")
                         .header("Authorization", "Bearer isso-nao-e-um-jwt-valido"))
                 .andExpect(status().is4xxClientError());
     }
