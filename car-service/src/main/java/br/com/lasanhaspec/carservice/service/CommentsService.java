@@ -15,6 +15,7 @@ import br.com.lasanhaspec.carservice.repository.UserVehicleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,10 +56,8 @@ public class CommentsService {
             if (!parent.getChronicIssue().getId().equals(chronicIssueId)) {
                 throw new BusinessException("Parent comment does not belong to this chronic issue");
             }
-            // so 1 nivel de resposta: nao permite responder a uma resposta
-            if (parent.getParentComment() != null) {
-                throw new BusinessException("Cannot reply to a reply — only one level of nesting is allowed");
-            }
+            // comentarios encadeados: qualquer comentario pode ser pai de uma resposta,
+            // permitindo discussoes paralelas em N niveis de profundidade
             comment.setParentComment(parent);
         }
 
@@ -72,19 +71,26 @@ public class CommentsService {
 
         List<Comments> all = commentRepository.findByChronicIssueIdOrderByCreatedAtAsc(chronicIssueId);
 
-        // separa raizes de respostas, monta a arvore de 1 nivel
+        // agrupa comentarios pelo id do pai (null = raiz), para montar a arvore em N niveis
+        Map<Long, List<Comments>> childrenByParentId = all.stream()
+                .filter(c -> c.getParentComment() != null)
+                .collect(Collectors.groupingBy(c -> c.getParentComment().getId()));
+
         List<Comments> roots = all.stream().filter(c -> c.getParentComment() == null).toList();
 
-        return roots.stream().map(root -> {
-            CommentDTO dto = toDTO(root, issue);
-            List<CommentDTO> replies = all.stream()
-                    .filter(c -> c.getParentComment() != null &&
-                            c.getParentComment().getId().equals(root.getId()))
-                    .map(reply -> toDTO(reply, issue))
-                    .collect(Collectors.toList());
-            dto.setReplies(replies);
-            return dto;
-        }).toList();
+        return roots.stream()
+                .map(root -> buildTree(root, issue, childrenByParentId))
+                .toList();
+    }
+
+    private CommentDTO buildTree(Comments comment, ChronicIssue issue, Map<Long, List<Comments>> childrenByParentId) {
+        CommentDTO dto = toDTO(comment, issue);
+        List<Comments> children = childrenByParentId.getOrDefault(comment.getId(), List.of());
+        List<CommentDTO> replies = children.stream()
+                .map(child -> buildTree(child, issue, childrenByParentId))
+                .collect(Collectors.toList());
+        dto.setReplies(replies);
+        return dto;
     }
 
     public void deleteComment(Long commentId, String email) {

@@ -117,7 +117,7 @@ class CommentsServiceTest {
     }
 
     @Test
-    void shouldThrowWhenReplyingToAReply() {
+    void shouldAllowReplyingToAReply() {
         CreateCommentsDTO dto = new CreateCommentsDTO();
         dto.setContent("Resposta de resposta");
         dto.setParentCommentId(6L);
@@ -134,11 +134,14 @@ class CommentsServiceTest {
         when(userRepository.findByEmail("user@test.com")).thenReturn(Optional.of(regularUser));
         when(chronicIssueRepository.findById(10L)).thenReturn(Optional.of(issue));
         when(commentsRepository.findById(6L)).thenReturn(Optional.of(parentThatIsAlreadyAReply));
+        when(commentsRepository.save(any(Comments.class))).thenAnswer(inv -> inv.getArgument(0));
 
-        assertThrows(BusinessException.class,
-                () -> commentsService.createComment(10L, dto, "user@test.com"));
+        commentsService.createComment(10L, dto, "user@test.com");
 
-        verify(commentsRepository, never()).save(any());
+        ArgumentCaptor<Comments> captor = ArgumentCaptor.forClass(Comments.class);
+        verify(commentsRepository).save(captor.capture());
+        // encadeamento em N niveis: responder a uma resposta agora eh permitido
+        assertEquals(parentThatIsAlreadyAReply, captor.getValue().getParentComment());
     }
 
     @Test
@@ -237,6 +240,46 @@ class CommentsServiceTest {
         assertEquals("comentário raiz", result.get(0).getContent());
         assertEquals(1, result.get(0).getReplies().size());
         assertEquals("uma resposta", result.get(0).getReplies().get(0).getContent());
+    }
+    @Test
+    void shouldBuildCommentTreeWithMultipleLevelsOfReplies() {
+        Comments root = new Comments();
+        root.setId(1L);
+        root.setUser(regularUser);
+        root.setChronicIssue(issue);
+        root.setContent("comentário raiz");
+
+        Comments reply = new Comments();
+        reply.setId(2L);
+        reply.setUser(adminUser);
+        reply.setChronicIssue(issue);
+        reply.setContent("uma resposta");
+        reply.setParentComment(root);
+
+        Comments replyToReply = new Comments();
+        replyToReply.setId(3L);
+        replyToReply.setUser(regularUser);
+        replyToReply.setChronicIssue(issue);
+        replyToReply.setContent("resposta da resposta");
+        replyToReply.setParentComment(reply);
+
+        when(chronicIssueRepository.findById(10L)).thenReturn(Optional.of(issue));
+        when(commentsRepository.findByChronicIssueIdOrderByCreatedAtAsc(10L))
+                .thenReturn(List.of(root, reply, replyToReply));
+        when(userVehicleRepository.existsByUserIdAndVehicleCatalogModelId(any(), any()))
+                .thenReturn(false);
+
+        List<CommentDTO> result = commentsService.listComments(10L);
+
+        assertEquals(1, result.size());
+        CommentDTO rootDto = result.get(0);
+        assertEquals("comentário raiz", rootDto.getContent());
+        assertEquals(1, rootDto.getReplies().size());
+
+        CommentDTO replyDto = rootDto.getReplies().get(0);
+        assertEquals("uma resposta", replyDto.getContent());
+        assertEquals(1, replyDto.getReplies().size());
+        assertEquals("resposta da resposta", replyDto.getReplies().get(0).getContent());
     }
 
     @Test
