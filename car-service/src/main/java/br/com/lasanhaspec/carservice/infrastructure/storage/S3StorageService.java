@@ -85,7 +85,7 @@ public class S3StorageService implements  StorageService{
     }
 
 
-    public class UploadResult {
+    public static class UploadResult {
 
         private final String url;
         private final String key;
