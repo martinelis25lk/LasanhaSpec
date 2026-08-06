@@ -1,0 +1,22 @@
+export const brandCountry = {
+  BMW: "de",
+  Subaru: "jp",
+  Chevrolet: "us",
+  Byd: "cn",
+  Mercedes: "de",
+  Renault: "fr",
+  Ford: "us",
+  Nissan: "jp",
+  Volkswagen: "de",
+  Audi: "de",
+  Honda: "jp",
+  Toyota: "jp",
+  Peugeot: "fr",
+  Fiat: "it",
+  Hyundai: "kr",
+  Volvo: "se",
+  Alfaromeo: "it",
+  Citroen: "fr",
+  Jeep: "us",
+  Mitsubishi: "jp"
+};

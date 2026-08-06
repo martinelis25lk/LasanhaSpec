@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <!-- Fundo externo circular preto -->
+  <circle cx="100" cy="100" r="96" fill="#111111" stroke="#FFFFFF" stroke-width="2"/>
+  <!-- Anel interno cinza metálico -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#262626" stroke-width="6"/>
+  
+  <!-- Letras B M W -->
+  <path id="ring" fill="none" d="M 30,100 a 70,70 0 1,1 140,0"/>
+  <text font-family="Arial, sans-serif" font-weight="bold" font-size="20" fill="#FFFFFF" letter-spacing="8">
+    <textPath href="#ring" startOffset="50%" text-anchor="middle">B M W</textPath>
+  </text>
+
+  <!-- Quadrantes internos (Azul e Branco) -->
+  <circle cx="100" cy="100" r="62" fill="#FFFFFF"/>
+  <path d="M 100,100 L 100,38 A 62,62 0 0,1 162,100 Z" fill="#0066B1"/>
+  <path d="M 100,100 L 100,162 A 62,62 0 0,1 38,100 Z" fill="#0066B1"/>
+</svg>

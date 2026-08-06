@@ -1,0 +1,48 @@
+.brand-card {
+  width: 250px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 12px;
+  background: #111;
+  border: 2px solid transparent;
+
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.brand-card img {
+  width: 130px;
+  height: 120px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* hover (quando passa o mouse) */
+.brand-card:hover {
+  transform: translateY(-5px);
+  border-color: #333;
+}
+
+/* slide ativo (centro) */
+.swiper-slide-active .brand-card {
+  border: 3px solid #ec5204;
+  box-shadow: 0 0 25px rgba(58, 58, 58, 0.4);
+  transform: scale(1.0);
+}
+
+/* logo cresce no ativo */
+.swiper-slide-active .brand-card img {
+  transform: scale(1.2);
+}
+
+body {
+  background: radial-gradient(circle at center, #1a1a1a, #000);
+}
+
+.brand-card:active {
+  transform: scale(0.95);
+}

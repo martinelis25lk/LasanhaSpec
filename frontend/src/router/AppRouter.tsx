@@ -14,6 +14,9 @@ import ChronicIssuesPage from "../pages/ChronicIssuesPage";
 import ModelChronicPage from "../pages/ModelChronicPage";
 import IssueDetailPage from "../pages/IssueDetailPage";
 
+
+import { BrandCarouselPage } from "../pages/BrandCarouselPage";
+
 export function AppRouter() {
   return (
     <BrowserRouter>
@@ -34,6 +37,7 @@ export function AppRouter() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/account/settings" element={<AccountSettingsPage />} />
+            <Route path="/catalog/brands" element={<BrandCarouselPage />} />
           </Route>
         </Route>
       </Routes>
