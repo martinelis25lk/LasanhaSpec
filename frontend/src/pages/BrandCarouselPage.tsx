@@ -1,4 +1,5 @@
 import { BrandCard } from "../components/BrandCard";
+import { useNavigate } from "react-router-dom";
 import { brandInfo } from "../data/brandInfo";
 import { brandCountry } from "../data/brandCountry";
 import { useState } from "react";
@@ -9,6 +10,7 @@ import { EffectCoverflow, Keyboard } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
+
 
 
 export function BrandCarouselPage() {
@@ -39,6 +41,7 @@ export function BrandCarouselPage() {
   ];
 
   const [selectedBrand, setSelectedBrand] = useState(brands[0]);
+  const navigate = useNavigate();
 
   
 
@@ -61,6 +64,8 @@ export function BrandCarouselPage() {
     <div className="carousel-frame">
 
       <Swiper
+        slideToClickedSlide={true}
+
         effect="coverflow"
         modules={[EffectCoverflow, Keyboard]}
         keyboard={{ enabled: true }}
@@ -85,7 +90,7 @@ export function BrandCarouselPage() {
 
         {brands.map((brand) => (
           <SwiperSlide key={brand}>
-            <BrandCard brand={brand}/>
+            <BrandCard brand={brand} isActive={brand === selectedBrand}/>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -107,6 +112,15 @@ export function BrandCarouselPage() {
         <span className="brand-index">
            {brands.indexOf(selectedBrand) + 1} / {brands.length}
         </span>
+
+        <div className="brand-actions">
+          <button className="cta-primary" onClick={() => navigate(`/catalog/${selectedBrand}`)}>
+            Ver catálogo {selectedBrand} 
+          </button>
+          <button className="cta-ghost" onClick={()=> navigate("/catalog")}>
+            Ver catálogo completo
+          </button>
+        </div>
 
     </div>
 

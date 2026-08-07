@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   getCatalogVehicles,
   createCatalogVehicle,
@@ -22,6 +23,10 @@ export default function CatalogPage() {
   const [editing, setEditing] = useState<CatalogVehicle | null>(null);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [error, setError] = useState("");
+  const {brand} = useParams();
+
+
+  
 
   async function load() {
     setLoading(true);
@@ -36,11 +41,13 @@ export default function CatalogPage() {
 
   useEffect(() => { load(); }, []);
 
-  const filtered = vehicles.filter((v) =>
-    `${v.brand} ${v.model} ${v.year} ${v.engineCode}`
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  const filtered = vehicles.filter((v) => {
+    const matchesSearch = '${v.brand} ${v.model} ${v.year} ${v.engineCode}'
+      .toLowerCase().includes(search.toLowerCase());
+    const matchesBrand = brand ? v.brand.toLowerCase() === brand.toLowerCase() : true;
+    return matchesSearch && matchesBrand;
+  
+  })
 
   async function handleSubmit(form: CatalogVehicleForm) {
     if (editing) {

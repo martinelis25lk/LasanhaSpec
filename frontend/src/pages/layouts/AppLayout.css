@@ -1,88 +1,72 @@
 .app-layout {
   min-height: 100vh;
-  display: flex;
   background: #0b0b0d;
   color: white;
 }
 
-.sidebar {
-  width: 240px;
-  background: #15151a;
-  border-right: 1px solid #26262d;
-  padding: 24px 16px;
-  
-
-  
-}
-
-.sidebar h1 {
-  color: #00ffae;
-  font-size: 22px;
-  margin-bottom: 4px;
-}
-
-.sidebar p {
-  color: #777;
-  font-size: 12px;
-  margin-bottom: 32px;
-}
-
-.sidebar nav {
+.navbar {
+  position: sticky;
+  top: 16px;                    /* cria o respiro ao redor */
+  z-index: 50;
+  margin: 0 16px;
+  height: 64px;
+  border-radius: 20px;          /* o arredondado grande da referência */
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 32px;
+  padding: 0 24px;
+  background: rgba(21, 21, 26, 0.7);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
 }
 
-.sidebar a {
+.navbar-logo {
+  color: #d02a05;
+  font-size: 30px;
+  text-decoration: none;
+  font-family: 'Metal Mania', cursive;
+  cursor: pointer;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.navbar-links a {
   color: #aaa;
   text-decoration: none;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  transition: background 0.18s, color 0.18s;
 }
 
-.sidebar a.active,
-.sidebar a:hover {
+.navbar-links a.active,
+.navbar-links a:hover {
   background: #12382d;
   color: #00ffae;
 }
 
-.app-main {
-  flex: 1;
-  min-width: 0;
-}
-
-.topbar {
-  height: 64px;
-  border-bottom: 1px solid #26262d;
-  background: #16161b;
+.navbar-right {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
+  gap: 8px;
 }
-
-.topbar input {
-  width: 420px;
-  max-width: 60%;
-  background: #222229;
-  border: 1px solid #33333a;
-  color: white;
-  padding: 10px 14px;
-  border-radius: 8px;
-}
-
 
 .content {
   padding: 24px;
 }
 
 .topbar-search {
-  width: 420px;
-  max-width: 55%;
+  width: 260px;
   background: #222229;
   border: 1px solid #33333a;
   color: white;
-  padding: 10px 14px;
+  padding: 8px 14px;
   border-radius: 8px;
   font-size: 13.5px;
   outline: none;
@@ -93,12 +77,6 @@
   border-color: #00ffae44;
 }
 
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .topbar-notif {
   position: relative;
   display: flex;
@@ -106,19 +84,13 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  background: transparent;
+  background: #202221;
   border: 1px solid transparent;
   border-radius: 8px;
   color: #888;
   cursor: pointer;
   padding: 0;
   transition: background 0.18s, color 0.18s, border-color 0.18s;
-  background-color: #202221;
-}
-
-.topbar button {
-
-  background-color: #212020;
 }
 
 .topbar-notif:hover {
@@ -155,4 +127,12 @@
   margin-left: 6px;
   letter-spacing: 0.03em;
   vertical-align: middle;
+}
+
+
+.menu-card h2 {
+  font-family: 'Metal Mania', cursive;
+  font-size: 20px;        /* Metal Mania costuma pedir um pouco mais de tamanho pra não ficar apertada */
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
 }

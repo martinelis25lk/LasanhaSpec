@@ -13,6 +13,7 @@ import CatalogPage from "../pages/CatalogPage";
 import ChronicIssuesPage from "../pages/ChronicIssuesPage";
 import ModelChronicPage from "../pages/ModelChronicPage";
 import IssueDetailPage from "../pages/IssueDetailPage";
+import MenuPage from "../pages/MenuPage";
 
 
 import { BrandCarouselPage } from "../pages/BrandCarouselPage";
@@ -38,6 +39,8 @@ export function AppRouter() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/account/settings" element={<AccountSettingsPage />} />
             <Route path="/catalog/brands" element={<BrandCarouselPage />} />
+            <Route path="/catalog/:brand" element={<CatalogPage />} />
+            <Route path="/menu" element={<MenuPage />} />
           </Route>
         </Route>
       </Routes>

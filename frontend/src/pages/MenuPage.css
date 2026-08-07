@@ -1,0 +1,114 @@
+
+.menu-page-wrapper {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 110px;   /* essa é a moldura desfocada que sobra em volta do card */
+}
+
+.menu-page-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('/menu_img/bmwe36.jpg') center/cover no-repeat;
+  filter: blur(10px) brightness(0.55);
+  transform: scale(1.15);  /* evita ver borda transparente nas pontas do blur */
+}
+
+.menu-page {
+  position: relative;
+  z-index: 1;
+  min-height: 770px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+}
+
+
+.menu-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('/menu_img/bmwe36.jpg') center/cover no-repeat;
+  transform: scale(1.15);  /* o "zoom" nítido de dentro da moldura */
+}
+
+
+
+
+.menu-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 35%, rgba(11,11,13,0.85) 100%),
+    linear-gradient(180deg, rgba(11,11,13,0.5) 0%, rgba(11,11,13,0.75) 100%);
+}
+
+.menu-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+  padding: 0 40px;
+  color: white;
+}
+
+.menu-eyebrow {
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #00ffae;
+}
+
+.menu-content h1 {
+  font-size: 40px;
+  margin: 12px 0 8px;
+}
+
+.menu-content > p {
+  color: #bbb;
+  margin-bottom: 40px;
+}
+
+.menu-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.menu-card {
+  width: 200px;
+  padding: 24px 20px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  text-decoration: none;
+  color: white;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-4px);
+  background: rgba(0,255,174,0.08);
+  border-color: rgba(0,255,174,0.35);
+}
+
+.menu-card h2 {
+  font-size: 18px;
+  margin-bottom: 6px;
+
+  
+}
+
+.menu-card p {
+  font-size: 13px;
+  color: #999;
+  line-height: 1.4;
+}

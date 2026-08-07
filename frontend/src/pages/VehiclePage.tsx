@@ -32,11 +32,10 @@ const VehiclePage = () => {
       </div>
 
       <div className="vehicle-card small">
-        <h2>Info</h2>
-        <p><strong>Dono:</strong> {data.ownerName}</p>
-        <p><strong>Ano:</strong> {data.year}</p>
-        <p><strong>Motor:</strong> {data.engine}</p>
-        <p><strong>Mods:</strong> {data.modsCount}</p>
+         <h2>Info</h2>
+         <p><strong>Ano:</strong> {data.year ?? "—"}</p>
+         <p><strong>Motor:</strong> {data.engine}</p>
+         <p><strong>Mods:</strong> {data.modificationsCount ?? 0}</p>
       </div>
 
       {data.mods?.length > 0 && (

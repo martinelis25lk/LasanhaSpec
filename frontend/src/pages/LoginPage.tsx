@@ -21,7 +21,7 @@ export default function LoginPage() {
 
     localStorage.setItem("token", token);
 
-    navigate("/");
+    navigate("/menu");
   } catch (error) {
     console.error("Erro no login:", error);
     setError("Usuário ou senha inválidos.");

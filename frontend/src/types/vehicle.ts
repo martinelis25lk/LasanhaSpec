@@ -46,3 +46,7 @@ export interface Modification {
   brand: string;
   category: string;
 }
+
+export interface VehicleDetail extends VehicleCard {
+  year?: number;
+}
