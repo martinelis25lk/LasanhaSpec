@@ -21,6 +21,8 @@ public interface VehicleImageRepository extends JpaRepository<VehicleImage, Long
 
     Optional<VehicleImage> findByUserVehicleIdAndPrimaryImageTrue(Long vehicleId);
 
+    List<VehicleImage> findByUserVehicleId(Long userVehicleId);
+
     boolean existsByUserVehicleId(Long vehicleId);
 
     @Modifying

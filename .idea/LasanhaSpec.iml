@@ -25,5 +25,7 @@
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:3.2.5" level="project" />
     <orderEntry type="library" name="Maven: jakarta.validation:jakarta.validation-api:3.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:6.2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:6.1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:6.1.6" level="project" />
   </component>
 </module>

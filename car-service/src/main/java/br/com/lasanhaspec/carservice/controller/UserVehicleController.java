@@ -3,6 +3,7 @@ package br.com.lasanhaspec.carservice.controller;
 
 import br.com.lasanhaspec.carservice.dto.CreateUserVehicleDTO;
 import br.com.lasanhaspec.carservice.dto.VehicleCardDTO;
+import br.com.lasanhaspec.carservice.dto.VehicleImageDTO;
 import br.com.lasanhaspec.carservice.service.UserVehicleService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,16 @@ public class UserVehicleController {
         String email = authentication.getName();
         String imageUrl = userVehicleService.uploadVehicleImage(vehicleId, file, email);
         return ResponseEntity.ok(imageUrl);
+    }
+
+
+    @GetMapping("/{vehicleId}/images")
+    public ResponseEntity<List<VehicleImageDTO>> getVehicleImages(
+            @PathVariable Long vehicleId,
+            Authentication authentication
+    ) {
+        String email = authentication.getName();
+        return ResponseEntity.ok(userVehicleService.getVehicleImages(vehicleId, email));
     }
 
 

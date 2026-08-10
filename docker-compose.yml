@@ -52,11 +52,13 @@ services:
       spring.aws.region: ${AWS_REGION}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
     depends_on:
       postgres:
         condition: service_healthy   # espera o postgres estar PRONTO
       rabbitmq:
         condition: service_healthy   # espera o rabbit estar PRONTO
+
 
   market-service:
     build: ./market-service

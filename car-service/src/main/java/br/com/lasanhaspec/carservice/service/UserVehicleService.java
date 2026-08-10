@@ -7,6 +7,7 @@ import br.com.lasanhaspec.carservice.domain.models.VehicleCatalogModel;
 import br.com.lasanhaspec.carservice.domain.models.VehicleImage;
 import br.com.lasanhaspec.carservice.dto.CreateUserVehicleDTO;
 import br.com.lasanhaspec.carservice.dto.VehicleCardDTO;
+import br.com.lasanhaspec.carservice.dto.VehicleImageDTO;
 import br.com.lasanhaspec.carservice.exception.BusinessException;
 import br.com.lasanhaspec.carservice.exception.ResourceNotFoundException;
 import br.com.lasanhaspec.carservice.infrastructure.storage.S3StorageService;
@@ -259,6 +260,14 @@ public class UserVehicleService {
 
         return VehicleCardMapper.toDTO(vehicle);
 
+    }
+
+    public List<VehicleImageDTO> getVehicleImages(Long vehicleId, String email) {
+        getOwnedVehicle(vehicleId, email);
+
+        return vehicleImageRepository.findByUserVehicleId(vehicleId).stream()
+                .map(img -> new VehicleImageDTO(img.getId(), img.getImageUrl(), img.getPrimaryImage()))
+                .toList();
     }
 
 

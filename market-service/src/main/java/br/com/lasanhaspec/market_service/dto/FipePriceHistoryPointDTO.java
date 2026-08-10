@@ -15,6 +15,10 @@ public class FipePriceHistoryPointDTO {
     private String referencedMonth;
     private BigDecimal price;
     private LocalDateTime fetchedAt;
+
+    public String getReferenceMonth() {
+        return referencedMonth;
     }
+}
 
 
