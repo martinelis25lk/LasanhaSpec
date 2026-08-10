@@ -1,240 +1,81 @@
 # LasanhaSpec
-Um projeto mais intimista, mas que não deixa de ser ambicioso para todos aqueles que gostam de carros ou que querem aprender mais sobre eles.
 
-É uma plataforma voltada mais  para entusiastas do mundo automotivo, das corridas e da preparação. 
-Com foco em análise técnica de veículos, preparação automotiva e impacto de modificações de performance, consumo, custo e manutenabilidade.
+Plataforma para entusiastas de carros modificados, com foco no mercado brasileiro: garagem digital, catálogo técnico e uma base colaborativa de problemas crônicos por modelo.
 
-O projeto nasceu da ideia do autor de sempre pensar nos carros como grandes legos/lasanhas alinhado ao prazer e curiosidade em programar coisas diferentes.
-E como todo bom grande lasanheiro, quem não gostaria de um programa acessível de análise de performance baseado em valores e impactos reais que as modificações proporcionam para o seu possante, hein? haha
-
-
-obs: por quê LasanhaSpec? bom, na comunidade gearhead de carros modificados, o carros são carinhosamente apelidados de lasanhas, pq como toda boa lasanha,, tem várias camadas(peças) e o cozinheiro(gearhead) se diverte montando haha.
-
- Sobre o Projeto
-
-Lasanha Spec é uma plataforma voltada para entusiastas de carros usados e modificados, com foco inicial no mercado brasileiro.
-
-O objetivo é centralizar conhecimento técnico, experiências reais e projetos automotivos em um único ambiente acessível, estruturado e confiável aplicar conceitos de:
-
-
-### Backend
-
-* Java
-* Spring Boot
-* Spring Data JPA
-* Hibernate
-* Banco relacional
-* AWS S3 para imagens
-* Microserviços
-
-### Frontend (em desenvolvimento)
-
-* React
-* TypeScript
-* Vite
+**Por que "LasanhaSpec"?** Na cultura gearhead, carros que são modificados são carinhosamente chamados de "lasanhas" , porque, como toda boa lasanha, tem várias camadas (peças) empilhadas, e quem monta se diverte no processo e o  nome pegou.
 
 ---
 
+## O problema
 
+O Brasil tem uma frota de veículos cada vez mais envelhecida, puxada pelo custo alto de carro novo desde a pandemia. Isso significa mais gente dependendo de carro usado, com manutenção mais cara e falhas recorrentes que raramente estão documentadas em algum lugar confiável — o conhecimento fica espalhado em fórum, grupo de WhatsApp e vídeo do YouTube, sem estrutura.
 
+O LasanhaSpec tenta centralizar isso: dado técnico real, histórico de problema por modelo, e uma garagem digital pra acompanhar o que muda no seu carro ao longo do tempo.
 
+## Funcionalidades
 
-Andei me informando sobre microserviços e percebi que não é todo projeto que se deve começar de cara com esse tipo de arquitetura de software, e que em muitos casos há a necessidade de maturar o projeto em um
-monolitico bem estruturado e de acordo com a escalabilidade e necessidades do projeto, ir quebrando o sistema para uma nova concepção, mas como este projeto é mais como uma cobaia para fins didáticos e de diversão mesmo. Então o projeto segue uma abordagem baseada em microserviços, iniciando com um serviço central de veículos.
+**Garagem do usuário** — cadastro de veículos com ficha completa (fábrica vs. atual: potência, torque, peso), múltiplas fotos por carro, upload direto pra S3.
 
+**Catálogo técnico** — base de modelos de fábrica, navegável por marca, com ficha de especificação completa.
 
-## 🧠 Arquitetura (em evolução)
+**Problemas crônicos por modelo** — base colaborativa de falhas conhecidas: sintoma, severidade, custo estimado, manutenção preventiva, com sistema de votos da comunidade. É o diferencial real do projeto.. não existe em nenhum catálogo técnico genérico, só existe porque é feito por quem realmente lida com esses carros.
 
-Inicialmente o projeto nasceu como um monolito estruturado, mas está evoluindo para uma arquitetura baseada em serviços conforme novas necessidades surgem.
+**Autenticação e controle de acesso** — JWT + Spring Security, com validação de ownership (um usuário só edita/remove o que é dele).
 
-Hoje a separação está caminhando para:
+## Arquitetura
 
-- `car-service` → domínio principal (veículos, garagem, crônicos)
-- `market-service` → dados externos (FIPE, preços, análise de mercado)
+O projeto começou como monolito e está migrando pra microsserviços conforme a necessidade "real" aparece. Sem separar cedo demais só porque "é o que se faz"  .
 
-### Fluxo geral:
+- `car-service` — domínio principal: veículos, garagem, catálogo, crônicos
+- `market-service` — dados externos (preço FIPE)
 
 ```mermaid
 graph TD
-
-    User((User / Frontend)) -->|HTTP| CarService[car-service]
-
+    User((Usuário / Frontend)) -->|HTTP| CarService[car-service]
     CarService -->|REST| MarketService[market-service]
-
-    CarService -->|Evento: VehicleCreated| RabbitMQ[(RabbitMQ)]
-
-    RabbitMQ -->|Consume Event| MarketService
-
-    MarketService -->|HTTP| FIPE[FIPE API external]
+    MarketService -->|HTTP| FIPE[API FIPE externa]
 ```
 
-## 🇧🇷 Problema
+> RabbitMQ já está provisionado no `docker-compose.yml` para comunicação assíncrona entre os serviços (ex: evento de veículo criado), mas ainda não está consumido pelo código — está no roadmap, não implementado.
 
-O Brasil possui uma frota de veículos de passeio cada vez mais envelhecida, impulsionada pelo alto custo dos carros novos desde a pandemia.
+## Stack
 
-Consequências:
+**Backend:** Java 17 · Spring Boot 3 · Spring Data JPA / Hibernate · Spring Security (JWT) · PostgreSQL · Flyway · AWS S3
 
-* Crescente dependência de veículos antigos
-* Manutenções complexas e caras
-* Falhas recorrentes pouco documentadas
-* Informação dispersa em fóruns e vídeos
-* Alto risco para proprietários e compradores
+**Frontend:** React · TypeScript · Vite
 
-Entusiastas frequentemente dependem de conhecimento informal para evitar prejuízos graves.
+**Infra:** Docker Compose · GitHub Actions (CI)
 
----
+## Rodando localmente
 
-##  Proposta da Plataforma
+```bash
+git clone https://github.com/martinelis25lk/LasanhaSpec.git
+cd LasanhaSpec
+cp .env.example .env   # preenche as variáveis (banco, JWT secret, credenciais AWS)
+docker compose up --build
+```
+Frontend em `localhost:5173`, `car-service` em `localhost:8080`, `market-service` em `localhost:8081`.
 
-Criar um hub que combine:
+## Status
 
-* Base de conhecimento técnica
-* Rede social de projetos automotivos
-* Garagem digital do usuário
-* Documentação de problemas crônicos(eu considero essa feature o diferencial do meu projeto)
-* Compartilhamento de builds e modificações
+**Pronto:**
+- Autenticação e autorização (JWT + RBAC)
+- Garagem do usuário (CRUD completo + galeria de imagens no S3)
+- Catálogo de veículos, navegável por marca
+- Problemas crônicos com votação
+- Suíte de testes (JUnit + Mockito) cobrindo as camadas de serviço e autorização
 
----
-
-##  Público-Alvo
-
-### Entusiastas hardcore
-
-* Realizam modificações profundas
-* Buscam dados técnicos
-* Compartilham projetos
-
-###  Donos apaixonados
-
-* Gostam de um modelo específico
-* Querem aprender mais
-* Podem fazer upgrades leves
-
-###  Usuários curiosos ou compradores
-
-* Pesquisam antes de adquirir um veículo
-* Precisam de informações rápidas e confiáveis
-
----
-
-##  Funcionalidades do MVP
-
-###  Garagem do Usuário
-
-* Cadastro de veículos próprios
-* Informações básicas e personalização
-* Ativação/desativação
-
----
-
-###  Setups / Builds
-
-* Modificações atuais do veículo
-* Versionamento de configurações
-* Estatísticas básicas como cavalos, torque, kilometragem, potencial de preparação, infomações de KM/troca de óleo
-
----
-
-###  Imagens do Veículo
-
-* Upload para armazenamento na nuvem
-* Múltiplas fotos por veículo
-* Exibição tipo feed do instagram
-
----
-
-###  Crônicos por Modelo
-
-Base colaborativa de problemas recorrentes:
-
-* Descrição do problema
-* Sintomas
-* Severidade
-* Manutenção preventiva
-* Estimativa de custo
-* Votos de utilidade
-
----
-
-###  Interação Social Básica
-
-* Curtidas em fotos e builds
-* Feed simples de atualizações
-
----
-
-
-
-##  Objetivo do Projeto
-
-Validar a utilidade da plataforma e construir uma base sólida para evolução futura, evitando complexidade prematura.
-
----
-
-##  Status do Projeto
-
-Em desenvolvimento ativo.
-
-Funcionalidades core do backend já implementadas ou em progresso, incluindo:
-
-* Modelagem de domínio
-* Estrutura de APIs REST
-* Integração com storage na nuvem
-
----
-
-##  Visão de Longo Prazo
-
-Transformar a plataforma em referência para:
-
-* Conhecimento técnico automotivo colaborativo
-* Comunidade de entusiastas
-* Documentação de builds reais
-* Prevenção de problemas mecânicos comuns
-
----
-
-##  Autor
-
-Projeto desenvolvido como iniciativa independente com foco em aprendizado prático e potencial de produto real, readme ainda em andamento tbm kkk
-
-
-
-
-
-## Status das Funcionalidades
-
-###  Implementado
-- Cadastro e autenticação de usuários (JWT + Spring Security)
-- Garagem do usuário (CRUD de veículos)
-- Upload de imagens para AWS S3
-- Catálogo de veículos base
-- Problemas crônicos por modelo com sistema de votos
-
-###  Em desenvolvimento
-- Frontend (React + TypeScript)
+**Em desenvolvimento:**
 - Feed social
-- Setups da comunidade
+- Sistema de badges/conquistas
+- Importação de gráfico de dinamômetro (CSV)
+- Deploy em produção
 
-  ----
+## Próximos passos
 
-- agora sim tive uma ideia interessante pra microserviço e que faça sentido com o rumo q a aplicação tá tomando, vou tentar integrar um serviço de disponibilidade de informações da tabela FIPE juntamente com um serviço de captura de informações de peças de carros, acho q vo ter q fazer algum tipo de scraping em sites de autopeças nacionais pra ter mais dados, tentar acessar as apis do mercado livre e ebay e tentar normalizar esses dados de forma consistente para serem servidos no meu projeto principal.
+- Microsserviço de consulta de preço de peças (Mercado Livre / eBay / autopeças nacionais), ligando um crônico aprovado a "quais peças isso envolve e quanto custa hoje"
+- Ranking de builds verificado por dado real de dyno, não por número autodeclarado
 
+## Autor
 
-
-
-* Sobre a feture de consulta em apis de peças como do Mercado livre, ebay, eutoparts etc...
-
-- Crônico aprovado → peças relacionadas → custo estimado de manutenção
-- exemplo: Ford Fiesta 2004
-  Crônico aprovado: bomba d’água com vazamento
-  ↓
-  Peças relacionadas:
-- bomba d’água
-- junta
-- aditivo
-- correia auxiliar
-  ↓
-  Preço médio no mercado
-
-
+Projeto pessoal, desenvolvido como forma de aprendizado prático em arquitetura de microsserviços e full stack Java/React — em desenvolvimento ativo.
