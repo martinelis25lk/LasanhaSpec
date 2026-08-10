@@ -1,10 +1,9 @@
-import { useState, useRef} from "react";
+import { useState, useRef, useEffect} from "react";
 import { Link } from "react-router-dom";
 import type { VehicleCard } from "../types/vehicle";
 import { PerformanceBar } from "./PerformanceBar/PerformanceBar";
-import { uploadVehicleImage } from "../api/vehicleApi";
+import { uploadVehicleImage, getVehicleImages  } from "../api/vehicleApi";
 import "./VehicleShowcase.css";
-
 
 
 
@@ -13,9 +12,10 @@ import "./VehicleShowcase.css";
 
 interface Props {
   vehicle: VehicleCard;
-  images?: string[];
   onImageUploaded?: () => void;
 }
+
+
 
 function CoveredCarPlaceholder() {
   return (
@@ -33,58 +33,74 @@ function CoveredCarPlaceholder() {
   );
 }
 
-export function VehicleShowcase({ vehicle, images, onImageUploaded }: Props) {
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [uploading, setUploading] = useState(false);
-  const [localImageUrl, setLocalImageUrl] = useState<string | null>(vehicle.imageUrl ?? null);
 
-  const photos = images && images.length > 0
-    ? images
-    : localImageUrl
-      ? [localImageUrl]
-      : [];
 
-  const [photoIndex, setPhotoIndex] = useState(0);
 
-  function prevPhoto() {
-    setPhotoIndex((i) => (i === 0 ? photos.length - 1 : i - 1));
-  }
-  function nextPhoto() {
-    setPhotoIndex((i) => (i === photos.length - 1 ? 0 : i + 1));
-  }
+            export function VehicleShowcase({ vehicle, onImageUploaded }: Props) {
+        const fileRef = useRef<HTMLInputElement>(null);
+        const [uploading, setUploading] = useState(false);
+        const [photos, setPhotos] = useState<string[]>([]);
+        const [photoIndex, setPhotoIndex] = useState(0);
 
-  function handleUploadClick() {
-    fileRef.current?.click();
-  }
+        async function loadImages() {
+            try {
+            const images = await getVehicleImages(vehicle.id);
+            const ordered = [...images].sort((a, b) => (b.primaryImage ? 1 : 0) - (a.primaryImage ? 1 : 0));
+            setPhotos(ordered.map((img) => img.imageUrl));
+            setPhotoIndex(0);
+            } catch {
+            // se falhar, cai pro fallback da imageUrl única que já veio no card
+            setPhotos(vehicle.imageUrl ? [vehicle.imageUrl] : []);
+            }
+        }
 
-  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
+        useEffect(() => {
+            loadImages();
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [vehicle.id]);
 
-    if (!file.type.startsWith("image/")) {
-      alert("Selecione um arquivo de imagem válido.");
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      alert("A imagem deve ter no máximo 5MB.");
-      return;
-    }
+        function prevPhoto() {
+            setPhotoIndex((i) => (i === 0 ? photos.length - 1 : i - 1));
+        }
+        function nextPhoto() {
+            setPhotoIndex((i) => (i === photos.length - 1 ? 0 : i + 1));
+        }
 
-    setUploading(true);
-    try {
-      const url = await uploadVehicleImage(vehicle.id, file);
-      setLocalImageUrl(url);
-      setPhotoIndex(0);
-      onImageUploaded?.();
-    } catch (err: unknown) {
-      const msg = (err as { response?: { data?: { message?: string } } })
-        ?.response?.data?.message;
-      alert(msg ?? "Erro ao fazer upload da imagem.");
-    } finally {
-      setUploading(false);
-      if (fileRef.current) fileRef.current.value = "";
-    }
-  }
+        function handleUploadClick() {
+            fileRef.current?.click();
+        }
+
+        async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            if (!file.type.startsWith("image/")) {
+            alert("Selecione um arquivo de imagem válido.");
+            return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+            alert("A imagem deve ter no máximo 5MB.");
+            return;
+            }
+
+            setUploading(true);
+            try {
+            await uploadVehicleImage(vehicle.id, file);
+            await loadImages();
+            onImageUploaded?.();
+            } catch (err: unknown) {
+            const msg = (err as { response?: { data?: { message?: string } } })
+                ?.response?.data?.message;
+            alert(msg ?? "Erro ao fazer upload da imagem.");
+            } finally {
+            setUploading(false);
+            if (fileRef.current) fileRef.current.value = "";
+            }
+        }
+
+
+
+
 
   const pwrFactory = vehicle.factoryWeight > 0
     ? Math.round((vehicle.factoryHorsePower / (vehicle.factoryWeight / 1000)) * 10) / 10 : 0;
@@ -112,7 +128,7 @@ export function VehicleShowcase({ vehicle, images, onImageUploaded }: Props) {
         <button
           className={`showcase-upload-btn ${uploading ? "showcase-upload-btn--loading" : ""}`}
           onClick={handleUploadClick}
-          title="Trocar foto"
+          title="Adicionar foto"
           disabled={uploading}
         >
           {uploading ? (

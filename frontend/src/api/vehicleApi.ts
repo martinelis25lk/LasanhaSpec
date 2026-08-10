@@ -5,6 +5,17 @@ export const getUserVehicles = async () => {
   return response.data;
 };
 
+export interface VehicleImage {
+  id: number;
+  imageUrl: string;
+  primaryImage: boolean;
+}
+
+export const getVehicleImages = async (vehicleId: number): Promise<VehicleImage[]> => {
+  const response = await api.get(`/user-vehicles/${vehicleId}/images`);
+  return response.data;
+};
+
 export const getFeedVehicles = async () => {
   const response = await api.get("/user-vehicles/feed");
   return response.data;
