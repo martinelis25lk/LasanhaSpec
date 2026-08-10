@@ -35,19 +35,10 @@ const VehiclePage = () => {
          <h2>Info</h2>
          <p><strong>Ano:</strong> {data.year ?? "—"}</p>
          <p><strong>Motor:</strong> {data.engine}</p>
-         <p><strong>Mods:</strong> {data.modificationsCount ?? 0}</p>
+       
       </div>
 
-      {data.mods?.length > 0 && (
-        <div className="vehicle-card">
-          <h2>Modificações</h2>
-          <div className="mods-grid">
-            {data.mods?.map((mod) => (
-              <div key={mod.name} className="mod-card">{mod.name}</div>
-            ))}
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 };

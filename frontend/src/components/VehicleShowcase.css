@@ -1,0 +1,188 @@
+.showcase {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.showcase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.showcase-brand {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #666;
+}
+
+.showcase-name {
+  font-family: 'Metal Mania', cursive;
+  font-size: 26px;
+  color: #fff;
+  margin: 2px 0 0;
+}
+
+.showcase-gain {
+  font-size: 13px;
+  font-weight: 700;
+  color: #00ffae;
+  background: rgba(0,255,174,0.08);
+  border: 1px solid rgba(0,255,174,0.25);
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.showcase-frame {
+  position: relative;
+  border-radius: 16px;
+  padding: 32px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0,255,174,0.06), transparent 60%),
+    #0d0d10;
+  border: 1px solid #1e1e26;
+  margin-bottom: 20px;
+}
+
+.showcase-bolt {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2a2a30;
+  border: 1px solid #3a3a42;
+}
+.showcase-bolt.tl { top: 10px; left: 10px; }
+.showcase-bolt.tr { top: 10px; right: 10px; }
+.showcase-bolt.bl { bottom: 10px; left: 10px; }
+.showcase-bolt.br { bottom: 10px; right: 10px; }
+
+.showcase-photo-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+}
+
+.showcase-photo {
+  max-width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 20px rgba(0,0,0,0.5));
+}
+
+.covered-car-placeholder {
+  width: 220px;
+  opacity: 0.8;
+}
+
+.showcase-arrow {
+  all: unset;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #ccc;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  z-index: 1;
+}
+.showcase-arrow:hover { background: rgba(0,255,174,0.12); border-color: rgba(0,255,174,0.35); color: #00ffae; }
+.showcase-arrow.left { left: 4px; }
+.showcase-arrow.right { right: 4px; }
+
+.showcase-photo-count {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #666;
+}
+
+.showcase-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.showcase-tabs {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 16px;
+}
+
+.showcase-tab {
+  all: unset;
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #555;
+  cursor: not-allowed;
+  box-sizing: border-box;
+}
+
+.showcase-tab--active {
+  color: #00ffae;
+  border-color: rgba(0,255,174,0.3);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+.showcase-upload-btn {
+  all: unset;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #ccc;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  box-sizing: border-box;
+}
+
+.showcase-upload-btn:hover {
+  background: rgba(0,255,174,0.14);
+  border-color: rgba(0,255,174,0.4);
+  color: #00ffae;
+}
+
+.showcase-upload-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+
+.showcase-upload-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top-color: #00ffae;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}

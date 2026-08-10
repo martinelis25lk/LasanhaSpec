@@ -131,129 +131,125 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Tabela ──────────────────────────────────────────────── */
-.catalog-table-wrap {
-  overflow-x: auto;
-  border: 1px solid #1e1e26;
-  border-radius: 12px;
-}
-
-.catalog-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.catalog-table th {
-  background: #0f0f14;
-  color: #555;
-  font-size: 10.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  padding: 11px 14px;
-  text-align: left;
-  border-bottom: 1px solid #1e1e26;
-  white-space: nowrap;
-}
-
-.th-actions { text-align: center; }
-
-.catalog-table td {
-  padding: 13px 14px;
-  color: #a0a0b0;
-  border-bottom: 1px solid #17171e;
-  vertical-align: middle;
-}
-
-.catalog-table tbody tr:last-child td { border-bottom: none; }
-.catalog-table tbody tr:hover td { background: #13131a; }
-
-/* Células específicas */
-.catalog-brand-model {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.catalog-brand {
-  font-size: 11px;
-  color: #555;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.catalog-model-name {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #e0e0e8;
-}
-
-.catalog-year { color: #888; font-size: 13px; }
-
-.catalog-engine {
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  color: #7a7a8a;
-}
-
-.catalog-value {
-  font-weight: 700;
-  color: #00ffae;
-  font-size: 13.5px;
-}
-
-.catalog-unit {
-  font-size: 10px;
-  color: #00ffae88;
-  margin-left: 2px;
-  font-weight: 400;
-}
-
-.catalog-transmission {
-  font-size: 12px;
-  color: #888;
-}
-
 .catalog-empty {
   text-align: center;
   color: #444;
   padding: 48px;
   font-size: 13px;
+  grid-column: 1 / -1;
 }
 
-/* ── Badges ──────────────────────────────────────────────── */
-.catalog-asp-badge {
+/* ── Grid de modelos ─────────────────────────────────────── */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.model-card-wrap {
+  position: relative;
+}
+
+.model-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: white;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.model-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 174, 0.3);
+}
+
+.model-brand {
+  font-size: 11px;
+  color: #555;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.model-name {
+  font-family: 'Metal Mania', cursive;
+  font-size: 22px;
+  margin: 2px 0 4px;
+  letter-spacing: 0.5px;
+  color: #e0e0e8;
+}
+
+.model-sub {
+  font-family: "Courier New", monospace;
+  font-size: 12.5px;
+  color: #7a7a8a;
+  margin-bottom: 10px;
+}
+
+.model-badges {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.model-badge {
   font-size: 10px;
   font-weight: 700;
+  letter-spacing: 0.03em;
   padding: 3px 8px;
   border-radius: 5px;
+  text-transform: uppercase;
   white-space: nowrap;
-  letter-spacing: 0.03em;
 }
 
 .asp-naturally_aspirated { background: #1a2e1a; color: #4ade80; border: 1px solid #4ade8033; }
 .asp-turbocharged        { background: #1a1a2e; color: #818cf8; border: 1px solid #818cf833; }
 .asp-supercharged        { background: #2e1a1a; color: #f87171; border: 1px solid #f8717133; }
 
-.catalog-drive-badge {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 5px;
-  letter-spacing: 0.05em;
-}
-
 .drive-awd { background: #2e1a00; color: #fb923c; border: 1px solid #fb923c33; }
 .drive-rwd { background: #1a1a2e; color: #60a5fa; border: 1px solid #60a5fa33; }
 .drive-fwd { background: #1a2e1a; color: #4ade80; border: 1px solid #4ade8033; }
 
-/* ── Botões de ação ──────────────────────────────────────── */
-.catalog-actions {
+.model-stats {
+  display: flex;
+  gap: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.model-stats div {
+  display: flex;
+  flex-direction: column;
+}
+
+.model-stats span {
+  font-size: 15px;
+  font-weight: 700;
+  color: #00ffae;
+}
+
+.model-stats small {
+  font-size: 10px;
+  color: #00ffae88;
+  letter-spacing: 0.03em;
+}
+
+/* ── Botões de ação (admin) ──────────────────────────────── */
+.model-card-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   display: flex;
   gap: 6px;
-  justify-content: center;
+  z-index: 2;
 }
 
 .catalog-btn-edit,
@@ -266,6 +262,8 @@
   height: 28px;
   border-radius: 6px;
   border: 1px solid #2a2a35;
+  background: #0a0a0acc;
+  backdrop-filter: blur(4px);
   cursor: pointer;
   color: #555;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
@@ -285,4 +283,3 @@
 }
 
 .catalog-btn-delete:disabled { opacity: 0.3; cursor: not-allowed; }
-
