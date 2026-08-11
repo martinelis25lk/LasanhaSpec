@@ -171,7 +171,7 @@
 
 .cta-ghost {
   color: #e5e0ea;
-  background: linear-gradient(180deg, #000000 0%, #400900 22%, #4e0d03 55%, #781000 82%, #8b1300 100%);
+  background: linear-gradient(180deg, #000000 0%, #2a0808 22%, #3a0e0e 55%, #431018 82%, #4a0f1a 100%);
   filter: drop-shadow(0 0 6px rgba(156, 163, 175, 0.3)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
   animation-duration: 2.2s;
 }
@@ -255,7 +255,7 @@
 .story-tile:hover {
   transform: rotate(0deg) scale(1.035) !important;
   z-index: 10 !important;
-  box-shadow: 0 26px 50px -14px rgba(255, 0, 0, 0.4);
+  box-shadow: 0 26px 50px -14px rgba(122, 20, 20, 0.4);
 }
 
 .story-tile img {

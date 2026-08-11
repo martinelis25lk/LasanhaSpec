@@ -1,7 +1,7 @@
 .mcp-loading { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 80px; color: #555; }
-.mcp-spinner { width: 28px; height: 28px; border: 2px solid #2a2a35; border-top-color: #00ffae; border-radius: 50%; animation: mcp-spin 0.8s linear infinite; }
+.mcp-spinner { width: 28px; height: 28px; border: 2px solid #2a2a35; border-top-color: #5f7a4a; border-radius: 50%; animation: mcp-spin 0.8s linear infinite; }
 @keyframes mcp-spin { to { transform: rotate(360deg); } }
-.mcp-error { color: #ef4444; padding: 24px; }
+.mcp-error { color: #9c2b2b; padding: 24px; }
 .mcp-page { padding: 24px; max-width: 1100px; }
 
 .mcp-back { all: unset; cursor: pointer; color: #666; font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 20px; transition: color 0.15s; }
@@ -11,7 +11,7 @@
 .mcp-hero-img { width: 280px; flex-shrink: 0; }
 .mcp-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .mcp-hero-info { padding: 24px; flex: 1; }
-.mcp-hero-info h1 { font-size: 22px; font-weight: 700; color: #f0f0f0; margin: 0 0 4px; }
+.mcp-hero-info h1 { font-family: 'Metal Mania', cursive; font-size: 24px; font-weight: 400; letter-spacing: 0.3px; color: #f0f0f0; margin: 0 0 4px; }
 .mcp-hero-sub { color: #555; font-size: 13px; margin: 0 0 20px; }
 .mcp-hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 .mcp-hstat { background: #1e1e28; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
@@ -20,21 +20,21 @@
 
 .mcp-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .mcp-section-header h2 { font-size: 17px; font-weight: 700; color: #f0f0f0; margin: 0; }
-.mcp-report-btn { all: unset; cursor: pointer; background: rgba(0,255,174,.12); border: 1px solid rgba(0,255,174,.3); color: #00ffae; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px; transition: background 0.15s; }
-.mcp-report-btn:hover { background: rgba(0,255,174,.22); }
+.mcp-report-btn { all: unset; cursor: pointer; background: rgba(95,122,74,.12); border: 1px solid rgba(95,122,74,.3); color: #5f7a4a; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px; transition: background 0.15s; }
+.mcp-report-btn:hover { background: rgba(95,122,74,.22); }
 .mcp-empty { color: #555; padding: 40px 0; text-align: center; }
 .mcp-issues { display: flex; flex-direction: column; gap: 12px; }
 
 .ic-card { background: #16161b; border: 1px solid #26262d; border-radius: 12px; padding: 20px; }
 .ic-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .ic-sev { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.04em; }
-.sev-low    { background: rgba(0,255,174,.12); color: #00ffae; border: 1px solid rgba(0,255,174,.3); }
-.sev-medium { background: rgba(245,158,11,.12); color: #f59e0b; border: 1px solid rgba(245,158,11,.3); }
-.sev-high   { background: rgba(249,115,22,.12); color: #f97316; border: 1px solid rgba(249,115,22,.3); }
-.sev-critical { background: rgba(239,68,68,.15); color: #ef4444; border: 1px solid rgba(239,68,68,.35); }
+.sev-low    { background: rgba(95,122,74,.12); color: #5f7a4a; border: 1px solid rgba(95,122,74,.3); }
+.sev-medium { background: rgba(184,134,11,.12); color: #b8860b; border: 1px solid rgba(184,134,11,.3); }
+.sev-high   { background: rgba(184,134,11,.12); color: #b8860b; border: 1px solid rgba(184,134,11,.3); }
+.sev-critical { background: rgba(156,43,43,.15); color: #9c2b2b; border: 1px solid rgba(156,43,43,.35); }
 
-.ic-title { font-size: 16px; font-weight: 600; color: #00c9ff; cursor: pointer; margin: 0; transition: color 0.15s; }
-.ic-title:hover { color: #00ffae; }
+.ic-title { font-size: 16px; font-weight: 600; color: #3d7aa8; cursor: pointer; margin: 0; transition: color 0.15s; }
+.ic-title:hover { color: #5f7a4a; }
 .ic-desc { color: #888; font-size: 13px; margin: 0 0 16px; }
 
 .ic-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
@@ -45,13 +45,13 @@
 .ic-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 .ic-votes { display: flex; gap: 8px; }
 .ic-vote-btn { all: unset; cursor: pointer; font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 6px; border: 1px solid #2a2a35; color: #888; transition: all 0.14s; }
-.ic-vote-useful:hover { background: rgba(0,255,174,.1); color: #00ffae; border-color: rgba(0,255,174,.3); }
-.ic-vote-not:hover { background: rgba(239,68,68,.1); color: #ef4444; border-color: rgba(239,68,68,.3); }
+.ic-vote-useful:hover { background: rgba(95,122,74,.1); color: #5f7a4a; border-color: rgba(95,122,74,.3); }
+.ic-vote-not:hover { background: rgba(156,43,43,.1); color: #9c2b2b; border-color: rgba(156,43,43,.3); }
 
 .ic-actions { display: flex; gap: 8px; align-items: center; }
-.ic-approve-btn { all: unset; cursor: pointer; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 6px; background: rgba(0,255,174,.12); color: #00ffae; border: 1px solid rgba(0,255,174,.3); transition: background 0.14s; }
-.ic-approve-btn:hover { background: rgba(0,255,174,.22); }
-.ic-reject-btn { all: unset; cursor: pointer; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 6px; background: rgba(239,68,68,.12); color: #ef4444; border: 1px solid rgba(239,68,68,.3); transition: background 0.14s; }
-.ic-reject-btn:hover { background: rgba(239,68,68,.22); }
-.ic-detail-btn { all: unset; cursor: pointer; font-size: 13px; color: #f59e0b; padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(245,158,11,.3); background: rgba(245,158,11,.08); transition: background 0.14s; }
-.ic-detail-btn:hover { background: rgba(245,158,11,.18); }
+.ic-approve-btn { all: unset; cursor: pointer; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 6px; background: rgba(95,122,74,.12); color: #5f7a4a; border: 1px solid rgba(95,122,74,.3); transition: background 0.14s; }
+.ic-approve-btn:hover { background: rgba(95,122,74,.22); }
+.ic-reject-btn { all: unset; cursor: pointer; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 6px; background: rgba(156,43,43,.12); color: #9c2b2b; border: 1px solid rgba(156,43,43,.3); transition: background 0.14s; }
+.ic-reject-btn:hover { background: rgba(156,43,43,.22); }
+.ic-detail-btn { all: unset; cursor: pointer; font-size: 13px; color: #b8860b; padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(184,134,11,.3); background: rgba(184,134,11,.08); transition: background 0.14s; }
+.ic-detail-btn:hover { background: rgba(184,134,11,.18); }

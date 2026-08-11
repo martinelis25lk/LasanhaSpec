@@ -22,7 +22,7 @@
 }
 
 .navbar-logo {
-  color: #d02a05;
+  color: #5c1a1a;
   font-size: 30px;
   text-decoration: none;
   font-family: 'Metal Mania', cursive;
@@ -47,8 +47,8 @@
 
 .navbar-links a.active,
 .navbar-links a:hover {
-  background: #540404;
-  color: #00ffae;
+  background: #300a0a;
+  color: #5f7a4a;
 }
 
 .navbar-right {
@@ -74,7 +74,7 @@
 }
 
 .topbar-search:focus {
-  border-color: #ff000044;
+  border-color: #7a141444;
 }
 
 .topbar-notif {
@@ -105,7 +105,7 @@
   right: 6px;
   width: 7px;
   height: 7px;
-  background: #d30000;
+  background: #6b1414;
   border-radius: 50%;
   border: 1.5px solid #16161b;
 }

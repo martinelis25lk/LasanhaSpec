@@ -66,7 +66,7 @@
   box-sizing: border-box;
   width: 100%;
   text-align: center;
-  background: #c1c7c5;
+  background: #5f7a4a;
   color: #0a0a0a;
   font-size: 13.5px;
   font-weight: 700;
@@ -77,12 +77,12 @@
 }
 
 .login-button:hover {
-  background: #950902;
+  background: #4d6b3d;
   transform: translateY(-1px);
 }
 
 .login-error {
-  color: #ef4444;
+  color: #9c2b2b;
   font-size: 13px;
   margin-top: 8px;
   text-align: center;
@@ -96,7 +96,7 @@
 }
 
 .login-register-link a {
-  color: #ffffff;
+  color: #5f7a4a;
   text-decoration: none;
 }
 

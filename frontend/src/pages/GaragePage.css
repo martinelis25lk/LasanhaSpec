@@ -44,7 +44,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  background: #00ffae;
+  background: #5f7a4a;
   color: #0a0a0a;
   font-size: 13.5px;
   font-weight: 700;
@@ -55,9 +55,9 @@
   box-sizing: border-box;
 }
 
-.add-vehicle-btn:hover { background: #00e69c; transform: translateY(-1px); }
+.add-vehicle-btn:hover { background: #4d6b3d; transform: translateY(-1px); }
 .add-vehicle-btn--disabled { opacity: 0.4; cursor: not-allowed; }
-.add-vehicle-btn--disabled:hover { transform: none; background: #00ffae; }
+.add-vehicle-btn--disabled:hover { transform: none; background: #5f7a4a; }
 
 /* ── Loading ─────────────────────────────────────────────── */
 .garage-loading {
@@ -74,7 +74,7 @@
   width: 28px;
   height: 28px;
   border: 2px solid #2a2a35;
-  border-top-color: #00ffae;
+  border-top-color: #5f7a4a;
   border-radius: 50%;
   animation: garage-spin 0.7s linear infinite;
 }
@@ -96,8 +96,8 @@
 }
 
 .garage-empty:hover {
-  border-color: #00ffae44;
-  background: #00ffae06;
+  border-color: #5f7a4a44;
+  background: #5f7a4a06;
 }
 
 .garage-empty p {
@@ -109,7 +109,7 @@
 
 .garage-empty span {
   font-size: 13px;
-  color: #00ffae;
+  color: #5f7a4a;
 }
 
 /* ── Lista ───────────────────────────────────────────────── */
@@ -145,9 +145,9 @@
 }
 
 .garage-delete-btn:hover {
-  background: #ef444420;
-  border-color: #ef444455;
-  color: #ef4444;
+  background: #9c2b2b33;
+  border-color: #9c2b2b8c;
+  color: #9c2b2b;
 }
 
 .garage-delete-btn:disabled { opacity: 0.3; cursor: not-allowed; }

@@ -39,7 +39,7 @@
 
 .post-btn {
   all: unset;
-  background: #b02701;
+  background: #521717;
   color: #0a0a0a;
   font-size: 13.5px;
   font-weight: 700;
@@ -51,7 +51,7 @@
 }
 
 .post-btn:hover {
-  background: #b02701;
+  background: #6b1f1f;
   transform: translateY(-1px);
 }
 

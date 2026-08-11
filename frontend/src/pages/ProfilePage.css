@@ -15,7 +15,7 @@
 
 .profile-banner {
   height: 80px;
-  background: linear-gradient(135deg, #0d2d1f, #1a1a22);
+  background: linear-gradient(135deg, #1c2417, #1a1a22);
 }
 
 .profile-info {
@@ -44,8 +44,8 @@
 .profile-avatar-initials {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #00ffae22, #00c98840);
-  color: #00ffae;
+  background: linear-gradient(135deg, #5f7a4a22, #5f7a4a40);
+  color: #5f7a4a;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,8 +64,10 @@
 }
 
 .profile-name-row h1 {
-  font-size: 22px;
-  font-weight: 700;
+  font-family: 'Metal Mania', cursive;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
   color: #f0f0f0;
   margin: 0;
 }
@@ -73,9 +75,9 @@
 .profile-badge {
   font-size: 11px;
   font-weight: 600;
-  background: #2a1f00;
-  color: #f59e0b;
-  border: 1px solid #f59e0b33;
+  background: #2e2408;
+  color: #b8860b;
+  border: 1px solid #b8860b33;
   padding: 3px 10px;
   border-radius: 20px;
 }
@@ -110,7 +112,7 @@
 .profile-stat-value {
   font-size: 22px;
   font-weight: 700;
-  color: #00ffae;
+  color: #5f7a4a;
 }
 
 .profile-stat-label {
@@ -145,8 +147,8 @@
 }
 
 .profile-tab--active {
-  color: #00ffae;
-  border-bottom-color: #00ffae;
+  color: #5f7a4a;
+  border-bottom-color: #5f7a4a;
 }
 
 /* ── WIP ──────────────────────────────────────────────── */
@@ -185,9 +187,9 @@
   transition: background 0.15s, color 0.15s;
 }
 .profile-avatar-upload-btn:hover {
-  background: #00ffae18;
-  color: #00ffae;
-  border-color: rgba(0, 255, 174, 0.4);
+  background: #5f7a4a18;
+  color: #5f7a4a;
+  border-color: rgba(95, 122, 74, 0.4);
 }
 
 .profile-avatar-loading {
@@ -203,14 +205,14 @@
   width: 22px;
   height: 22px;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  border-top-color: #00ffae;
+  border-top-color: #5f7a4a;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .profile-badge--admin {
-  background: rgba(245, 158, 11, 0.15) !important;
-  color: #f59e0b !important;
-  border-color: rgba(245, 158, 11, 0.3) !important;
+  background: rgba(184, 134, 11, 0.15) !important;
+  color: #b8860b !important;
+  border-color: rgba(184, 134, 11, 0.3) !important;
 }
