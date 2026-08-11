@@ -127,42 +127,32 @@ export function BrandCarouselPage() {
 
 
 
-    <div className="brand-story-section">
-
-          <div className="story-card variant-1">
-              <img src="/parts/motor.jpeg" />
-              <p>Não existem carros ruins, existem carros que foram negligenciados pelos donos.</p>
-          </div>
-
-          <div className="story-card variant-2">
-              <img src="/parts/fendas.jpeg" />
-              <p>O conhecimento compartilhado é o que mantém as máquinas vivas.</p>
-          </div>
-
-          <div className="story-card variant-3">
-              <img src="/parts/cabecote.jpeg" />
-              <p>Todo projeto começa com um problema, curiosidade e força de vontade para encontrar as informações certas.</p>
-          </div>
-
-          <div className="story-card variant-4">
-              <img src="/parts/molas.jpeg" />
-              <p>O que define um entusiasta não é a sua quantidade de carros na garagem, mas sua resiliência.</p>
-          </div>
-
-          <div className="story-card variant-5">
-              <img src="/parts/chaves.jpeg" />
-              <p>Esta comunidade foi criada para unir e compartilhar conhecimento, lembre-se disso.</p>
-          </div>
-
-    
-          <div className="story-card variant-6">
-              <img src="/parts/porcas.jpeg" />
-              <p>Aqui, ajudamos você a encontrar aquela agulha no palheiro, ou em outros termos, encontrar as peças certas para a máquina certa.</p>
-          </div>
-
-
-
+  <div className="brand-story-section">
+      <div className="story-tile tile-a">
+        <img src="/parts/motor.jpeg" />
+        <p>Não existem carros ruins, existem carros que foram negligenciados pelos donos.</p>
+      </div>
+    <div className="story-tile tile-b">
+       <img src="/parts/fendas.jpeg" />
+       <p>O conhecimento compartilhado é o que mantém as máquinas vivas.</p>
     </div>
+    <div className="story-tile tile-c">
+       <img src="/parts/cabecote.jpeg" />
+       <p>Todo projeto começa com um problema, curiosidade e força de vontade.</p>
+    </div>
+    <div className="story-tile tile-d">
+      <img src="/parts/molas.jpeg" />
+       <p>Resiliência define o entusiasta, não a garagem cheia.</p>
+    </div>
+    <div className="story-tile tile-e">
+       <img src="/parts/chaves.jpeg" />
+       <p>Criada pra unir e compartilhar conhecimento.</p>
+    </div>
+    <div className="story-tile tile-f">
+      <img src="/parts/porcas.jpeg" />
+      <p>Achar a agulha no palheiro: a peça certa pra máquina certa.</p>
+    </div>
+  </div>
 
     </div>
 

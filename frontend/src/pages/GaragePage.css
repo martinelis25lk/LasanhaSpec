@@ -13,11 +13,12 @@
 }
 
 .garage-header-text h1 {
+  font-family: 'Metal Mania', cursive;
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   color: #fff;
+  letter-spacing: 0.5px;
   margin: 0 0 4px;
-  letter-spacing: -0.02em;
 }
 
 .garage-header-text p {

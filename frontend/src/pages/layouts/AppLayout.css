@@ -47,7 +47,7 @@
 
 .navbar-links a.active,
 .navbar-links a:hover {
-  background: #12382d;
+  background: #540404;
   color: #00ffae;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .topbar-search:focus {
-  border-color: #00ffae44;
+  border-color: #ff000044;
 }
 
 .topbar-notif {
@@ -105,7 +105,7 @@
   right: 6px;
   width: 7px;
   height: 7px;
-  background: #00ffae;
+  background: #d30000;
   border-radius: 50%;
   border: 1.5px solid #16161b;
 }

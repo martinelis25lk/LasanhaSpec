@@ -13,15 +13,21 @@
 .vehicle-hero img {
   width: 100%;
   max-width: 500px;
-  border-radius: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .vehicle-hero h1 {
+  font-family: 'Metal Mania', cursive;
+  font-size: 28px;
+  letter-spacing: 0.5px;
+  color: #f0f0f0;
   margin-top: 12px;
 }
 
 .vehicle-hero p {
-  color: #888;
+  color: #666;
+  font-size: 13px;
 }
 
 /* BOTÃO */
@@ -32,24 +38,37 @@
 }
 
 .post-btn {
-  background: #00ffae;
-  color: #000;
-  border: none;
+  all: unset;
+  background: #b02701;
+  color: #0a0a0a;
+  font-size: 13.5px;
+  font-weight: 700;
   padding: 10px 18px;
-  border-radius: 8px;
+  border-radius: 9px;
   cursor: pointer;
+  transition: background 0.18s, transform 0.12s;
+  box-sizing: border-box;
+}
+
+.post-btn:hover {
+  background: #b02701;
+  transform: translateY(-1px);
 }
 
 /* CARDS */
 .vehicle-card {
-  background: #1a1a1a;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  color: #f0f0f0;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 14px;
   margin-bottom: 16px;
 }
 
 .vehicle-card.small {
-  font-size: 14px;
+  font-size: 13.5px;
+  color: #aaa;
 }
 
 /* MODS */
@@ -60,20 +79,24 @@
 }
 
 .mod-card {
-  background: #222;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #2a2a35;
+  color: #888;
   padding: 8px 12px;
   border-radius: 6px;
+  font-size: 12.5px;
 }
 
 .vehicle-back {
   all: unset;
   cursor: pointer;
-  color: #666;
+  color: #555;
   font-size: 13px;
   display: flex;
   align-items: center;
   gap: 6px;
   margin-bottom: 20px;
   transition: color 0.15s;
+  box-sizing: border-box;
 }
 .vehicle-back:hover { color: #f0f0f0; }

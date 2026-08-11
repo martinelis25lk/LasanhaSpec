@@ -30,7 +30,7 @@
 .showcase-gain {
   font-size: 13px;
   font-weight: 700;
-  color: #00ffae;
+  color: #b88484;
   background: rgba(0,255,174,0.08);
   border: 1px solid rgba(0,255,174,0.25);
   padding: 6px 12px;
@@ -55,7 +55,7 @@
   height: 10px;
   border-radius: 50%;
   background: #2a2a30;
-  border: 1px solid #3a3a42;
+  border: 1px solid #030394;
 }
 .showcase-bolt.tl { top: 10px; left: 10px; }
 .showcase-bolt.tr { top: 10px; right: 10px; }
@@ -101,7 +101,7 @@
   transition: background 0.15s, border-color 0.15s;
   z-index: 1;
 }
-.showcase-arrow:hover { background: rgba(0,255,174,0.12); border-color: rgba(0,255,174,0.35); color: #00ffae; }
+.showcase-arrow:hover { background: rgba(0,255,174,0.12); border-color: rgba(209, 18, 0, 0.35); color: #ec0c08; }
 .showcase-arrow.left { left: 4px; }
 .showcase-arrow.right { right: 4px; }
 
@@ -172,7 +172,7 @@
 
 .showcase-upload-btn:hover {
   background: rgba(0,255,174,0.14);
-  border-color: rgba(0,255,174,0.4);
+  border-color: rgba(228, 34, 0, 0.4);
   color: #00ffae;
 }
 
@@ -182,7 +182,7 @@
   width: 14px;
   height: 14px;
   border: 2px solid rgba(255,255,255,0.25);
-  border-top-color: #00ffae;
+  border-top-color: #f73302;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }

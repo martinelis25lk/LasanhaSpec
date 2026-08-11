@@ -1,6 +1,6 @@
 .login-page {
   min-height: 100vh;
-  background: #111827;
+  background: radial-gradient(circle at center, #3a0e0e 0%, #080808 70%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,23 +10,26 @@
 .login-card {
   width: 100%;
   max-width: 475px;
-  background: #1f2937;
-  border: 1px solid #374151;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 32px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
 .login-title {
-  color: white;
+  font-family: 'Metal Mania', cursive;
+  color: #f0f0f0;
   font-size: 28px;
-  font-weight: 700;
+  letter-spacing: 0.5px;
   margin-bottom: 8px;
 }
 
 .login-subtitle {
-  color: #9ca3af;
-  font-size: 14px;
+  color: #666;
+  font-size: 13px;
   margin-bottom: 24px;
 }
 
@@ -37,61 +40,63 @@
 }
 
 .login-input {
-  width: 80%;
-  padding: 14px 16px;
-  background: #111827;
-  border: 1px solid #4b5563;
-  border-radius: 10px;
-  color: white;
-  font-size: 15px;
+  width: 100%;
+  padding: 12px 16px;
+  background: #111116;
+  border: 1px solid #2a2a35;
+  border-radius: 9px;
+  color: #f0f0f0;
+  font-size: 13.5px;
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.15s;
+  font-family: inherit;
+  box-sizing: border-box;
 }
 
 .login-input:focus {
-  border-color: #22c55e;
+  border-color: #37550244;
 }
 
 .login-input::placeholder {
-  color: #6b7280;
+  color: #555;
 }
 
 .login-button {
-  background: #1fd361;
-  color: white;
-  border: none;
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  background: #c1c7c5;
+  color: #0a0a0a;
+  font-size: 13.5px;
+  font-weight: 700;
   padding: 12px;
-  border-radius: 5px;
-  font-size: 11px;
-  font-weight: 300;
+  border-radius: 9px;
   cursor: pointer;
-  transition: background 0.2s ease;
-  width: 90%;
-  letter-spacing: normal;
-
+  transition: background 0.18s, transform 0.12s;
 }
 
 .login-button:hover {
-  background: #16a34a;
+  background: #950902;
+  transform: translateY(-1px);
 }
 
 .login-error {
-  color: #f87171;
-  font-size: 14px;
+  color: #ef4444;
+  font-size: 13px;
   margin-top: 8px;
   text-align: center;
 }
 
-
-
 .login-register-link {
   margin-top: 16px;
   text-align: center;
-  color: #aaa;
+  color: #666;
+  font-size: 13px;
 }
 
 .login-register-link a {
-  color: #00ffae;
+  color: #ffffff;
   text-decoration: none;
 }
 
