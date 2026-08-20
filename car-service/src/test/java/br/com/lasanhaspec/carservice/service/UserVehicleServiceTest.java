@@ -14,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import br.com.lasanhaspec.carservice.exception.BusinessException;
+
 
 import java.util.Optional;
 
@@ -47,14 +49,19 @@ class UserVehicleServiceTest {
 
     @Test
     void shouldThrowWhenUserTriesToAccessAnotherUsersVehicle() {
-        // Garante que um usuário não consegue acessar o veículo de outro
-        // Essa é a regra de segurança mais crítica do sistema
-        when(userVehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
-        when(userRepository.findByEmail("invasor@lasanhaspec.com"))
-                .thenReturn(Optional.of(new User()));
+        User user = new User();
+        user.setId(1L);
+        user.setEmail("user@test.com");
 
-        assertThrows(ResourceNotFoundException.class, () ->
-                userVehicleService.uploadVehicleImage(1L, null, "invasor@lasanhaspec.com")
-        );
+        UserVehicle vehicle = new UserVehicle();
+        vehicle.setId(1L);
+        vehicle.setUserId(2L); // Dono diferente do usuário autenticado
+
+        when(userRepository.findByEmail("user@test.com")).thenReturn(Optional.of(user));
+        when(userVehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
+
+        assertThrows(BusinessException.class, () -> {
+            userVehicleService.getVehicleByIdForAuthenticatedUser(1L, "user@test.com");
+        });
     }
 }

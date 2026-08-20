@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.Objects;
 
 
 
@@ -64,6 +65,8 @@ public class UserVehicleService {
 
         long count = vehicleImageRepository.countByUserVehicleId(vehicleId);
 
+
+
         if (count >= 5) {
             throw new BusinessException("Only 5 images per vehicle");
         }
@@ -91,6 +94,8 @@ public class UserVehicleService {
                         filename.endsWith(".webp"))) {
             throw new IllegalArgumentException("Formato de imagem não suportado");
         }
+
+
 
         S3StorageService.UploadResult result = storageService.uploadFile(file);
 
@@ -335,7 +340,7 @@ public class UserVehicleService {
         UserVehicle vehicle = userVehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
 
-        if (!vehicle.getUserId().equals(user.getId())) {
+        if (!Objects.equals(vehicle.getUserId(), user.getId())) {
             throw new BusinessException("You do not have permission to access this vehicle");
         }
 
