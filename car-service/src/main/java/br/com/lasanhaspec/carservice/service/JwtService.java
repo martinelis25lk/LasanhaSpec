@@ -78,12 +78,16 @@ public class JwtService {
 
 
 
-    private Claims extractAllClaims(String token){
-        return Jwts.parser()
-                .verifyWith(getSigningKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+    private Claims extractAllClaims(String token) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 
 

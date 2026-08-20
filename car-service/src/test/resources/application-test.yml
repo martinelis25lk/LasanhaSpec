@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  flyway:
+    enabled: false
+
+aws:
+  s3:
+    bucket-name: test-bucket
+  credentials:
+    access-key: test-access-key
+    secret-key: test-secret-key
+  region:
+    static: us-east-1
+
+jwt:
+  secret: dGVzdC1zZWNyZXQta2V5LWZvci1qd3QtdmFsaWRhdGlvbi1wdXJwb3Nlcy1vbmx5MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+  expiration: 86400000
+
+cors:
+  allowed-origins: http://localhost:3000
+
+market-service:
+  url: http://localhost:8081

@@ -56,6 +56,7 @@ public class SecurityConfig {
 
 
 
+                        .requestMatchers(HttpMethod.DELETE, "/chronic-issues/*/comments/*").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/chronic-issues/*/approve").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/chronic-issues/*/reject").hasAuthority("ROLE_ADMIN")
 
