@@ -1,6 +1,6 @@
 package br.com.lasanhaspec.carservice.infrastructure.client;
 
-
+import org.springframework.beans.factory.annotation.Value;
 import br.com.lasanhaspec.carservice.dto.FipeHistoryPointDTO;
 import br.com.lasanhaspec.carservice.dto.FipeResponseDTO;
 import org.springframework.stereotype.Component;
@@ -18,9 +18,10 @@ public class MarketServiceClient {
     private final WebClient webClient;
     private static final Logger log = LoggerFactory.getLogger(MarketServiceClient.class);
 
-    public MarketServiceClient(WebClient.Builder builder) {
+    public MarketServiceClient(WebClient.Builder builder,
+                               @Value("${market-service.url}") String marketServiceUrl) {
         this.webClient = builder
-                .baseUrl("http://localhost:8081")
+                .baseUrl(marketServiceUrl)
                 .build();
     }
 

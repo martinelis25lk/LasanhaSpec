@@ -30,3 +30,18 @@ jwt:
 
 cors:
   allowed-origins: ${ALLOWED_ORIGINS}
+
+
+market-service:
+  url: ${MARKET_SERVICE_URL}
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never

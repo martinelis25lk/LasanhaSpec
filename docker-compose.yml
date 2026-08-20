@@ -53,6 +53,11 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
       postgres:
         condition: service_healthy   # espera o postgres estar PRONTO
@@ -79,7 +84,7 @@ services:
       rabbitmq:
         condition: service_healthy
       car-service:
-        condition: service_started   # car-service não tem healthcheck ainda, usa service_started
+        condition: service_healthy
 
 volumes:
   postgres_data:

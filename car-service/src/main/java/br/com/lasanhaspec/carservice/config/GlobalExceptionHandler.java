@@ -1,5 +1,9 @@
 package br.com.lasanhaspec.carservice.config;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.UUID;
 import java.util.List;
 import br.com.lasanhaspec.carservice.dto.ErrorResponseDTO;
 import br.com.lasanhaspec.carservice.exception.BusinessException;
@@ -13,6 +17,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+
 
 import java.time.LocalDateTime;
 
@@ -51,15 +57,23 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(400).body(error);
     }
 
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGeneric(
             Exception ex,
             HttpServletRequest request) {
 
+        String errorId = UUID.randomUUID().toString();
+
+        // loga o erro completo, com stack trace, só no servidor
+        log.error("[{}] Erro não tratado em {} {}", errorId,
+                request.getMethod(), request.getRequestURI(), ex);
+
         ErrorResponseDTO error = new ErrorResponseDTO(
                 LocalDateTime.now(), 500,
                 "Internal Server Error",
-                ex.getMessage(),
+                "Ocorreu um erro inesperado. Se precisar de suporte, informe o código: " + errorId,
                 request.getRequestURI()
         );
 
@@ -84,6 +98,12 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(403).body(error);
     }
+
+
+
+
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDTO> handleValidationException(
