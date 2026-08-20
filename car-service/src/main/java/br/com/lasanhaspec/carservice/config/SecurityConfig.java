@@ -52,7 +52,9 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**", "/swagger-ui/**",
-                                "/v3/api-docs/**").permitAll()
+                                "/v3/api-docs/**", "/actuator/health").permitAll()
+
+
 
                         .requestMatchers(HttpMethod.PATCH, "/chronic-issues/*/approve").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/chronic-issues/*/reject").hasAuthority("ROLE_ADMIN")
