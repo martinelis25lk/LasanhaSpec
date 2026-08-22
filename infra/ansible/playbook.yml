@@ -120,7 +120,7 @@
         mode: '0600'
 
     - name: Subir a aplicacao via Docker Compose
-      shell: docker compose up -d
+      shell: docker compose up -d --build
       args:
         chdir: /home/ubuntu/LasanhaSpec
 
