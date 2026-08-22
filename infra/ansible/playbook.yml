@@ -1,0 +1,157 @@
+---
+- name: Configurar Servidor EC2 - LasanhaSpec
+  hosts: lasanhaspec
+  become: true
+
+  tasks:
+    - name: Atualizar pacotes apt
+      apt:
+        update_cache: true
+
+    - name: Instalar dependencias base do sistema
+      apt:
+        name:
+          - git
+          - curl
+          - nginx
+          - certbot
+          - python3-certbot-nginx
+        state: present
+
+    - name: Adicionar repositorio oficial do Node.js 20.x
+      shell: curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+      args:
+        creates: /etc/apt/sources.list.d/nodesource.list
+
+    - name: Instalar Node.js 20.x
+      apt:
+        name: nodejs
+        state: present
+
+    - name: Criar arquivo Swap de 2GB para evitar estouro de memoria
+      shell: |
+        if [ ! -f /swapfile ]; then
+          fallocate -l 2G /swapfile
+          chmod 600 /swapfile
+          mkswap /swapfile
+          swapon /swapfile
+          echo '/swapfile none swap sw 0 0' >> /etc/fstab
+        fi
+
+    - name: Instalar Docker via script oficial
+      shell: curl -fsSL https://get.docker.com | sh
+      args:
+        creates: /usr/bin/docker
+
+    - name: Adicionar usuario ubuntu ao grupo docker
+      user:
+        name: ubuntu
+        groups: docker
+        append: true
+
+    - name: Clonar o repositorio LasanhaSpec
+      git:
+        repo: "https://github.com/martinelis25lk/LasanhaSpec.git"
+        dest: /home/ubuntu/LasanhaSpec
+        version: feat/infra-deploy
+        force: yes
+      become_user: ubuntu
+
+    - name: Ajustar script de build do Frontend no package.json
+      replace:
+        path: /home/ubuntu/LasanhaSpec/frontend/package.json
+        regexp: '"build": "tsc -b && vite build"'
+        replace: '"build": "vite build"'
+
+    - name: Instalar dependencias do Frontend
+      shell: npm install
+      args:
+        chdir: /home/ubuntu/LasanhaSpec/frontend
+      become_user: ubuntu
+
+    - name: Gerar build do Frontend
+      shell: npm run build
+      args:
+        chdir: /home/ubuntu/LasanhaSpec/frontend
+      become_user: ubuntu
+
+    - name: Criar diretorio de publicacao do Nginx
+      file:
+        path: /var/www/lasanhaspec
+        state: directory
+        mode: '0755'
+
+    - name: Copiar arquivos estaticos compilados para /var/www/lasanhaspec
+      shell: cp -r /home/ubuntu/LasanhaSpec/frontend/dist/* /var/www/lasanhaspec/
+
+    - name: Ajustar permissoes do diretorio do Frontend
+      file:
+        path: /var/www/lasanhaspec
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+        recurse: yes
+
+    - name: Criar o arquivo .env para o Docker Compose
+      copy:
+        dest: /home/ubuntu/LasanhaSpec/.env
+        content: |
+          POSTGRES_DB=lasanhaspec
+          POSTGRES_USER=postgres
+          POSTGRES_PASSWORD=postgres
+          SPRING_DATASOURCE_USERNAME=postgres
+          SPRING_DATASOURCE_PASSWORD=postgres
+          SPRING_FLYWAY_USER=postgres
+          SPRING_FLYWAY_PASSWORD=postgres
+          SPRING_JPA_HIBERNATE_DDL_AUTO=update
+          RABBITMQ_USER=guest
+          RABBITMQ_PASSWORD=guest
+          JWT_SECRET=minha_chave_jwt_secreta_para_testes_123456
+          JWT_EXPIRATION=86400000
+          MARKET_SERVICE_URL=http://market-service:8081
+          ALLOWED_ORIGINS=*
+          AWS_REGION=us-east-1
+          AWS_ACCESS_KEY_ID=test
+          AWS_SECRET_ACCESS_KEY=test
+          AWS_S3_BUCKET_NAME=test-bucket
+        owner: ubuntu
+        group: ubuntu
+        mode: '0600'
+
+    - name: Subir a aplicacao via Docker Compose
+      shell: docker compose up -d
+      args:
+        chdir: /home/ubuntu/LasanhaSpec
+
+    - name: Copiar configuracao do Nginx
+      copy:
+        src: lasanhaspec.nginx
+        dest: /etc/nginx/sites-available/lasanhaspec
+
+    - name: Ativar site no Nginx
+      file:
+        src: /etc/nginx/sites-available/lasanhaspec
+        dest: /etc/nginx/sites-enabled/lasanhaspec
+        state: link
+
+    - name: Remover site default do Nginx
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Testar e recarregar Nginx
+      systemd:
+        name: nginx
+        state: reloaded
+
+    - name: Emitir/Atualizar Certificado SSL com Certbot
+      command: >
+        certbot --nginx
+        -d lasanhaspecs.duckdns.org
+        --non-interactive
+        --agree-tos
+        -m gui.almeida.edu@gmail.com
+        --redirect
+      args:
+        creates: /etc/letsencrypt/live/lasanhaspecs.duckdns.org/fullchain.pem
