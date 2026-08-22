@@ -107,7 +107,7 @@
           SPRING_JPA_HIBERNATE_DDL_AUTO=update
           RABBITMQ_USER=guest
           RABBITMQ_PASSWORD=guest
-          JWT_SECRET=minha_chave_jwt_secreta_para_testes_123456
+          JWT_SECRET=v5LH7OpshAgZLvhXu0Xj021upGPkuSgm89T5HgoTB4w=
           JWT_EXPIRATION=86400000
           MARKET_SERVICE_URL=http://market-service:8081
           ALLOWED_ORIGINS=*
