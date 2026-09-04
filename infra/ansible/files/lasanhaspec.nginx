@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name lasanhaspec.duckdns.org;
+    server_name lasanhaspecs.duckdns.org;
 
     # Servir os arquivos do Frontend na raiz
     location / {
