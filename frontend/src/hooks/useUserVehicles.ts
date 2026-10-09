@@ -5,7 +5,7 @@ import type { VehicleCard } from "../types/vehicle";
 // Cache de módulo — limpo explicitamente no logout
 let cachedVehicles: VehicleCard[] | null = null;
 let cacheTimestamp = 0;
-const CACHE_TTL = 30 * 1000; // reduzido para 30s para refletir mudanças mais rápido
+const CACHE_TTL = 30 * 1000;
 
 export function clearVehicleCache() {
   cachedVehicles = null;
@@ -18,6 +18,7 @@ export function useUserVehicles() {
 
   const [vehicles, setVehicles] = useState<VehicleCard[]>(cachedVehicles ?? []);
   const [loading, setLoading] = useState(!hasValidCache);
+  const [error, setError] = useState(false);
   const mounted = useRef(true);
 
   const fetchVehicles = useCallback(async (forceRefresh = false) => {
@@ -31,16 +32,19 @@ export function useUserVehicles() {
     }
 
     setLoading(true);
+    setError(false);
     try {
       const data = await getUserVehicles();
       cachedVehicles = data;
       cacheTimestamp = Date.now();
-      // Bug 3 corrigido: checka mounted antes de setar estado
       if (mounted.current) {
         setVehicles(data);
       }
-    } catch (error) {
-      console.error("Erro ao carregar veículos:", error);
+    } catch (err) {
+      console.error("Erro ao carregar veículos:", err);
+      if (mounted.current) {
+        setError(true);
+      }
     } finally {
       if (mounted.current) {
         setLoading(false);
@@ -61,5 +65,5 @@ export function useUserVehicles() {
     fetchVehicles(true);
   }
 
-  return { vehicles, loading, refetch };
+  return { vehicles, loading, error, refetch };
 }

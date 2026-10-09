@@ -19,6 +19,8 @@ export default function AddVehicleModal({ onClose, onSuccess }: Props) {
   const [selected, setSelected] = useState<CatalogVehicle | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [catalogError, setCatalogError] = useState(false);
+
 
   // Form — herdado do catálogo, editável
   const [nickName, setNickName] = useState("");
@@ -38,6 +40,17 @@ export default function AddVehicleModal({ onClose, onSuccess }: Props) {
       .toLowerCase()
       .includes(search.toLowerCase())
   );
+
+    function loadCatalog() {
+    setLoadingCatalog(true);
+    setCatalogError(false);
+    getCatalogVehicles()
+      .then(setCatalog)
+      .catch(() => setCatalogError(true))
+      .finally(() => setLoadingCatalog(false));
+  }
+
+  useEffect(() => { loadCatalog(); }, []);
 
   function selectCatalog(c: CatalogVehicle) {
     setSelected(c);
@@ -151,10 +164,24 @@ export default function AddVehicleModal({ onClose, onSuccess }: Props) {
                 <div className="avm-spinner" />
                 <p>Carregando catálogo...</p>
               </div>
+            ) : catalogError ? (
+              <div className="avm-catalog-list">
+                <p className="avm-empty">
+                  Não foi possível carregar o catálogo.{" "}
+                  <button type="button" onClick={loadCatalog}
+                    style={{ all: "unset", cursor: "pointer", color: "#5f7a4a", textDecoration: "underline" }}>
+                    Tentar de novo
+                  </button>
+                </p>
+              </div>
             ) : (
               <div className="avm-catalog-list">
-                {filtered.length === 0 ? (
-                  <p className="avm-empty">Nenhum modelo encontrado.</p>
+                {catalog.length === 0 ? (
+                  <p className="avm-empty">
+                    O catálogo ainda está vazio. Peça a um admin para cadastrar os primeiros modelos.
+                  </p>
+                ) : filtered.length === 0 ? (
+                  <p className="avm-empty">Nenhum modelo encontrado para essa busca.</p>
                 ) : (
                   filtered.map((c) => (
                     <button key={c.id} className="avm-catalog-item" onClick={() => selectCatalog(c)}>

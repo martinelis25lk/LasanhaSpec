@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useUserVehicles } from "../hooks/useUserVehicles";
 import { VehicleShowcase } from "../components/VehicleShowcase";
 import AddVehicleModal from "../components/AddVehicleModal/AddVehicleModal";
+import { ErrorState } from "../components/StateViews/StateViews";
 import { deleteUserVehicle } from "../api/vehicleApi";
 import "./GaragePage.css";
 
 const MAX_VEHICLES = 5;
 
 const GaragePage = () => {
-  const { vehicles, loading, refetch } = useUserVehicles();
+  const { vehicles, loading, error, refetch } = useUserVehicles();
   const [showModal, setShowModal] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
@@ -59,6 +60,8 @@ const GaragePage = () => {
           <div className="garage-spinner" />
           <p>Carregando sua garagem...</p>
         </div>
+      ) : error ? (
+        <ErrorState message="Não foi possível carregar sua garagem." onRetry={refetch} />
       ) : vehicles.length === 0 ? (
         <div className="garage-empty" onClick={() => setShowModal(true)}>
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
@@ -72,20 +75,25 @@ const GaragePage = () => {
         </div>
       ) : (
         <div className="garage-list">
-        {vehicles.map((vehicle) => (
-         <div key={vehicle.id} className="garage-item">
-         <VehicleShowcase vehicle={vehicle} />
-         <button
-            className="garage-delete-btn"
-            onClick={() => handleDelete(vehicle.id)}
-            disabled={deletingId === vehicle.id}
-            title="Remover veículo"
-          >
-        {/* ...ícone que já existe, sem mudança... */}
-      </button>
-    </div>
-  ))}
-</div>
+          {vehicles.map((vehicle) => (
+            <div key={vehicle.id} className="garage-item">
+              <VehicleShowcase vehicle={vehicle} />
+              <button
+                className="garage-delete-btn"
+                onClick={() => handleDelete(vehicle.id)}
+                disabled={deletingId === vehicle.id}
+                title="Remover veículo"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <path d="M10 11v6M14 11v6"/>
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
       )}
 
       {/* ── Modal ───────────────────────────────────────── */}

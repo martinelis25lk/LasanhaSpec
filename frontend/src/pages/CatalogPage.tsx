@@ -9,6 +9,8 @@ import {
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import type { CatalogVehicle, CatalogVehicleForm } from "../types/catalog";
 import CatalogFormModal from "../components/CatalogFormModal/CatalogFormModal";
+import { EmptyState, ErrorState } from "../components/StateViews/StateViews";
+
 import "./CatalogPage.css";
 
 
@@ -25,12 +27,13 @@ export default function CatalogPage() {
   const [error, setError] = useState("");
   const { brand } = useParams();
 
-  async function load() {
+    async function load() {
     setLoading(true);
+    setError("");
     try {
       setVehicles(await getCatalogVehicles());
     } catch {
-      setError("Erro ao carregar catálogo.");
+      setError("Não foi possível carregar o catálogo.");
     } finally {
       setLoading(false);
     }
@@ -128,78 +131,89 @@ export default function CatalogPage() {
       </div>
 
       {/* ── Grid ─────────────────────────────────────────── */}
-      {error && <p className="catalog-error">{error}</p>}
+    
 
-      {loading ? (
+            {loading ? (
         <div className="catalog-loading">
           <div className="catalog-spinner" />
           <p>Carregando catálogo...</p>
         </div>
+      ) : error ? (
+        <ErrorState message={error} onRetry={load} />
+      ) : vehicles.length === 0 ? (
+        <EmptyState
+          icon="📚"
+          title="O catálogo ainda está vazio"
+          description={
+            isAdmin
+              ? "Cadastre o primeiro modelo para liberar a garagem e os chronic issues."
+              : "Os modelos serão adicionados em breve. Volte mais tarde!"
+          }
+          action={isAdmin ? { label: "Cadastrar primeiro modelo", onClick: openCreate } : undefined}
+        />
+      ) : filtered.length === 0 ? (
+        <p className="catalog-empty">Nenhum modelo encontrado para essa busca.</p>
       ) : (
         <div className="catalog-grid">
-          {filtered.length === 0 ? (
-            <p className="catalog-empty">Nenhum modelo encontrado.</p>
-          ) : (
-            filtered.map((v) => (
-              <div className="model-card-wrap" key={v.id}>
-                <Link to={`/catalog/model/${v.id}`} className="model-card">
-                  <span className="model-brand">{v.brand}</span>
-                  <h2 className="model-name">{v.model}</h2>
-                  <p className="model-sub">{v.year} · {v.engineCode}</p>
+          {filtered.map((v) => (
+            <div className="model-card-wrap" key={v.id}>
+              <Link to={`/catalog/model/${v.id}`} className="model-card">
+                <span className="model-brand">{v.brand}</span>
+                <h2 className="model-name">{v.model}</h2>
+                <p className="model-sub">{v.year} · {v.engineCode}</p>
 
-                  <div className="model-badges">
-                    {v.aspirationType && (
-                      <span className={`model-badge asp-${v.aspirationType.toLowerCase()}`}>
-                        {v.aspirationType.replace("_", " ")}
-                      </span>
-                    )}
-                    {v.driveType && (
-                      <span className={`model-badge drive-${v.driveType.toLowerCase()}`}>
-                        {v.driveType}
-                      </span>
-                    )}
-                  </div>
+                <div className="model-badges">
+                  {v.aspirationType && (
+                    <span className={`model-badge asp-${v.aspirationType.toLowerCase()}`}>
+                      {v.aspirationType.replace("_", " ")}
+                    </span>
+                  )}
+                  {v.driveType && (
+                    <span className={`model-badge drive-${v.driveType.toLowerCase()}`}>
+                      {v.driveType}
+                    </span>
+                  )}
+                </div>
 
-                  <div className="model-stats">
-                    <div><span>{v.factoryHorsepower ?? "—"}</span><small>hp</small></div>
-                    <div><span>{v.factoryTorque ?? "—"}</span><small>Nm</small></div>
-                    <div><span>{v.factoryWeight ?? "—"}</span><small>kg</small></div>
-                  </div>
-                </Link>
+                <div className="model-stats">
+                  <div><span>{v.factoryHorsepower ?? "—"}</span><small>hp</small></div>
+                  <div><span>{v.factoryTorque ?? "—"}</span><small>Nm</small></div>
+                  <div><span>{v.factoryWeight ?? "—"}</span><small>kg</small></div>
+                </div>
+              </Link>
 
-                {isAdmin && (
-                  <div className="model-card-actions">
-                    <button
-                      className="catalog-btn-edit"
-                      onClick={() => openEdit(v)}
-                      title="Editar"
-                    >
+              {isAdmin && (
+                <div className="model-card-actions">
+                  <button
+                    className="catalog-btn-edit"
+                    onClick={() => openEdit(v)}
+                    title="Editar"
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                  </button>
+                  <button
+                    className="catalog-btn-delete"
+                    onClick={() => handleDelete(v.id)}
+                    disabled={deletingId === v.id}
+                    title="Remover"
+                  >
+                    {deletingId === v.id ? "..." : (
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6M14 11v6"/>
                       </svg>
-                    </button>
-                    <button
-                      className="catalog-btn-delete"
-                      onClick={() => handleDelete(v.id)}
-                      disabled={deletingId === v.id}
-                      title="Remover"
-                    >
-                      {deletingId === v.id ? "..." : (
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="3 6 5 6 21 6"/>
-                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                          <path d="M10 11v6M14 11v6"/>
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))
-          )}
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       )}
 
